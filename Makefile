@@ -12,10 +12,7 @@ docker_compose_bin := $(shell command -v docker-compose 2> /dev/null)
 
 up: ## Start all containers (in background) for development
 	$(docker_compose_bin) up --no-recreate -d
-	$(docker_compose_bin) exec "$(NODE_CONTAINER_NAME)" yarn install
-
-start: ## Start application
-	$(docker_compose_bin) exec "$(NODE_CONTAINER_NAME)" yarn start
+	$(docker_compose_bin) run --rm "$(NODE_CONTAINER_NAME)" yarn install
 
 down: ## Stop all started for development containers
 	$(docker_compose_bin) down
@@ -23,4 +20,4 @@ down: ## Stop all started for development containers
 clean: ## Remove images from local registry
 	$(docker_compose_bin) down --volumes --rmi local
 
-init: clean up start
+init: clean up

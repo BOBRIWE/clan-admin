@@ -4,9 +4,11 @@ services:
   node:
     build:
       dockerfile: Dockerfile
-      context: ./docker/node
+      context: docker/node/
     working_dir: /app
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    restart: always
+    command: yarn start
     ports:
       - 3000:3000
     volumes:
