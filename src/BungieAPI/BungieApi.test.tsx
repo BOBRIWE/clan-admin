@@ -1,17 +1,13 @@
-import BungieAPI from './BungieAPI';
+import GroupsV2 from './GroupsV2/GroupsV2';
 
-it('should fetch', async () => {
-    let api = new BungieAPI();
-    let response = await api.getClan();
-    let json = await response.json();
+it('should fetch clan', async () => {
+    let clan = await GroupsV2.getClan(3990079);
 
-    console.log(json);
+    expect(clan).not.toBe(undefined);
 });
 
-it('should fetch members', async () => {
-    let api = new BungieAPI();
-    let response = await api.getClanMembers(3990079);
-    let json = await response.json();
+it('should fetch clan members', async () => {
+    let clanMembers = await GroupsV2.getClanMembers(3990079);
 
-    console.log(json);
+    expect(clanMembers).not.toBe(undefined);
 });
