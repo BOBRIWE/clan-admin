@@ -1,5 +1,5 @@
 import IGroupUserInfoCard from './IGroupUserInfoCard';
-import IUserInfoCard from './IUserInfoCard';
+import IUserInfoCard from '../User/IUserInfoCard';
 
 export default interface IGroupPotentialMember {
     potentialStatus: number

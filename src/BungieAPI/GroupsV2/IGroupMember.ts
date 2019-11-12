@@ -1,10 +1,10 @@
 import IGroupUserInfoCard from './IGroupUserInfoCard';
-import IUserInfoCard from './IUserInfoCard';
+import IUserInfoCard from '../User/IUserInfoCard';
 
 export default interface IGroupMember {
     memberType: number
     isOnline: boolean
-    lastOnlineStatusChange: string
+    lastOnlineStatusChange: number
     groupId: number
     destinyUserInfo: IGroupUserInfoCard
     bungieNetUserInfo: IUserInfoCard
