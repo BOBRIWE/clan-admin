@@ -2,21 +2,36 @@ import React from 'react';
 import './App.scss';
 import MembersList from '../MembersList/MembersList';
 import MemberInfo from '../MemberInfo/MemberInfo';
+import { RouteComponentProps } from 'react-router-dom';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
+interface IAppURLParams {
+    clan?: string | undefined;
+}
 
+interface IAppProps extends RouteComponentProps<IAppURLParams>{
+}
 
-      </header>
-      <article className="App-article">
-        <MembersList />
+interface IAppState {
+}
 
-        <MemberInfo />
-      </article>
-    </div>
-  );
-};
+export default class App extends React.Component<IAppProps, IAppState> {
 
-export default App;
+    componentDidMount(): void {
+        alert(this.props.match.params.clan);
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+
+                </header>
+                <article className="App-article">
+                    <MembersList />
+
+                    <MemberInfo />
+                </article>
+            </div>
+        );
+    }
+}
