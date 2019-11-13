@@ -13,6 +13,10 @@ export default class BungieAPICredentials {
         return 'zBCvMg0X0Ymo3dCOhfMOyeHrWqFasf1dDWupJR9jwHs';
     }
 
+    static get clientId(): number {
+        return 30543;
+    }
+
     static get uuid(): string {
         return uuidv4();
     }

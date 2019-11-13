@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import { Route, Redirect} from 'react-router';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Login from './Login/Login';
 import * as serviceWorker from './serviceWorker';
 import App from './App/App';
+import Authorize from './Authorize/Authorize';
 
 
 ReactDOM.render((
@@ -16,6 +16,7 @@ ReactDOM.render((
                 <Redirect to="/login"/>
             </Route>
             <Route path="/clan/:clan" component={App}/>
+            <Route path="/authorization" component={Authorize}/>
         </div>
     </Router>
 ), document.getElementById('root'));

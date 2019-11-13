@@ -9,15 +9,26 @@ interface IAppURLParams {
 }
 
 interface IAppProps extends RouteComponentProps<IAppURLParams>{
+
 }
 
 interface IAppState {
+    clanId: string
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
+    constructor(props: IAppProps) {
+        super(props);
+
+        this.state = {
+            clanId: ''
+        };
+    }
 
     componentDidMount(): void {
-        alert(this.props.match.params.clan);
+        this.setState({
+            clanId: this.props.match.params.clan as string
+        });
     }
 
     render() {
@@ -27,7 +38,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
                 </header>
                 <article className="App-article">
-                    <MembersList />
+                    {this.state.clanId !== '' ? <MembersList clanId={this.state.clanId}/> : ''}
 
                     <MemberInfo />
                 </article>

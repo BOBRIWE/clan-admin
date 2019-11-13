@@ -10,6 +10,7 @@ import ActivityModeType from '../BungieAPI/Destiny/Definitions/ActivityModeType'
 import Request from '../BungieAPI/Request';
 
 interface IMembersListProps {
+    clanId: string
 }
 
 interface IMembersListState {
@@ -17,23 +18,12 @@ interface IMembersListState {
 }
 
 class MembersList extends React.Component<IMembersListProps, IMembersListState> {
-    constructor(props: object) {
+    constructor(props: IMembersListProps) {
         super(props);
         this.state = {members: []};
 
-        const clanMembers = GroupsV2.getClanMembers(3990079);
+        // if (this.props.clanId === '') return;
 
-        clanMembers.then((members) => {
-            this.setState({
-                members: members.results.map((member) => member)
-            });
-        });
-
-        let banned = GroupsV2.getBannedMembersOfGroup(3990079);
-
-        banned.then((banned) => {
-            console.log(banned);
-        });
 
         // let userAccounts = Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
         // userAccounts.then((userAccounts) => {
@@ -50,16 +40,43 @@ class MembersList extends React.Component<IMembersListProps, IMembersListState> 
         // });
 
 
-        let token = Request.getAccessToken();
-        token.then((token) => {
-            console.log(token);
+        // let token = Request.getAccessToken();
+        // token.then((token) => {
+        //     console.log(token);
+        // });
+    }
+
+    componentDidMount(): void {
+        if (this.props.clanId === '') return;
+        const clId = parseInt(this.props.clanId);
+
+
+        const clanMembers = GroupsV2.getClanMembers(clId);
+
+        clanMembers.then((members) => {
+            this.setState({
+                members: members.results.map((member) => member)
+            });
+        });
+
+        let banned = GroupsV2.getBannedMembersOfGroup(parseInt(this.props.clanId));
+
+        banned.then((banned) => {
+            console.log(banned);
         });
     }
 
+    componentWillUpdate(nextProps: Readonly<IMembersListProps>, nextState: Readonly<IMembersListState>, nextContext: any): void {
+        console.log();
+    }
+
+
     render() {
+
+
         return (
             <section className="MembersList">
-                {this.state.members.map(function(member) {
+                {this.state.members.map((member) => {
                     return <MembersListItem member={member} />;
                 })}
             </section>

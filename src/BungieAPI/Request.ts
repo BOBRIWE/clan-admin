@@ -1,6 +1,7 @@
 import IResponse from './IResponse';
 import BungieAPICredentials from './BungieAPICredentials';
 import QueryString from 'query-string';
+import OAuth from './OAuth/OAuth';
 
 export default class Request {
     private readonly _requestPath: string;
@@ -10,21 +11,16 @@ export default class Request {
     }
 
     async send(): Promise<IResponse> {
-        try {
-            const fetchResponse = await fetch(
-                BungieAPICredentials.apiRoot + this._requestPath,
-                {
-                    method: 'GET',
-                    headers: {
-                        'X-API-Key': BungieAPICredentials.apiKey,
-                        'Authorization' : 'Bearer CLrVARKGAgAgDHoDYdWdwjJ3Ur/Oz5ubqHc+6tAxwcckLizDOt7kLxTgAAAAFaKjq+Ztb4fqmKwKGbSfh4wq3T8Mvviz+xzTSN9ZmZAYlwd3kvAXtA5aH8ODXedsM6dDVYCP0u1cz3Ga9PVMipb2sUtV/OqlOTDcs/tDs79KK7NCXv1XPvKYA/o/2ydR05nP3NiKSfpBEmoL9vlrZZ21RruALsJKASSHa8C8EOdl6D7aoxJZa2zpSZXrC11NV7rU0SWjMMCoxDMtge9pXwlo0cO6WOAMauaI6mU2q8c9zlrqfN5o6QgbeWwvWt6JE5krCooDsSc++JYcM7+Qy4FN/5F8UmTDiU1QxhwxfgQ='
-                    }
-                });
-            return await fetchResponse.json();
-        }catch (e) {
-            console.log(e);
-            return {} as Promise<IResponse>;
-        }
+        const fetchResponse = await fetch(
+            BungieAPICredentials.apiRoot + this._requestPath,
+            {
+                method: 'GET',
+                headers: {
+                    'X-API-Key': BungieAPICredentials.apiKey,
+                    'Authorization' : 'Bearer ' + OAuth.acessToken.access_token
+                }
+            });
+        return await fetchResponse.json();
     }
 
     static async getAccessToken() {
