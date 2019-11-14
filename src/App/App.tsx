@@ -13,7 +13,7 @@ interface IAppProps extends RouteComponentProps<IAppURLParams>{
 }
 
 interface IAppState {
-    clanId: string
+    clanId: number
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
@@ -21,13 +21,13 @@ export default class App extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            clanId: ''
+            clanId: NaN
         };
     }
 
     componentDidMount(): void {
         this.setState({
-            clanId: this.props.match.params.clan as string
+            clanId: parseInt(this.props.match.params.clan as string)
         });
     }
 
@@ -38,7 +38,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
                 </header>
                 <article className="App-article">
-                    {this.state.clanId !== '' ? <MembersList clanId={this.state.clanId}/> : ''}
+                    {isNaN(this.state.clanId) ? <MembersList clanId={this.state.clanId}/> : ''}
 
                     <MemberInfo />
                 </article>

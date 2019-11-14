@@ -1,55 +1,49 @@
 import IGroupResponse from './IGroupResponse';
-import BungieAPICredentials from '../BungieAPICredentials';
-import IResponse from '../IResponse';
 import ISearchResultOfGroupMember from './ISearchResultOfGroupMember';
 import Request from '../Request';
-import IDestinyLinkedProfilesResponse from '../Destiny/Responses/IDestinyLinkedProfilesResponse';
 import ISearchResultOfGroupBan from '../ISearchResultOfGroupBan';
 import IGetGroupsForMemberResponse from './IGetGroupsForMemberResponse';
 import BungieMembershipType from '../BungieMembershipType';
 import GroupType from './GroupType';
+import IGroupBanRequest from './IGroupBanRequest';
 
 export default class GroupsV2 {
     static async getClan(clanId: number): Promise<IGroupResponse> {
-        const fetchResponse = await fetch(
-            BungieAPICredentials.apiRoot + `/GroupV2/${clanId}/`,
-            {
-                method: 'GET',
-                headers: {
-                    'X-API-Key': BungieAPICredentials.apiKey
-                }
-            });
+        const request = new Request(`/GroupV2/${clanId}/`);
+        const response = await request.get<IGroupResponse>();
 
-        const json = await fetchResponse.json() as IResponse;
-        return json.Response as IGroupResponse;
+        return response.Response;
     }
 
     static async getClanMembers(clanId: number): Promise<ISearchResultOfGroupMember> {
-        const fetchResponse =  await fetch(
-            BungieAPICredentials.apiRoot + `/GroupV2/${clanId}/Members/`,
-            {
-                method: 'GET',
-                headers: {
-                    'X-API-Key': BungieAPICredentials.apiKey
-                }
-            });
+        const request = new Request(`/GroupV2/${clanId}/Members/`);
+        const response = await request.get<ISearchResultOfGroupMember>();
 
-        const json = await fetchResponse.json() as IResponse;
-        return json.Response as ISearchResultOfGroupMember;
+        return response.Response;
     }
 
     static async getBannedMembersOfGroup(groupId: number): Promise<ISearchResultOfGroupBan> {
         const request = new Request(`/GroupV2/${groupId}/Banned/`);
-        const response = await request.send();
+        const response = await request.get<ISearchResultOfGroupBan>();
 
-        return response.Response as ISearchResultOfGroupBan;
+        return response.Response;
     }
 
 
     static async getGroupsForMember(membershipType: BungieMembershipType, membershipId: number, groupType: GroupType, filter: number = 0): Promise<IGetGroupsForMemberResponse> {
         const request = new Request(`/GroupV2/User/${membershipType}/${membershipId}/${filter}/${groupType}/`);
-        const response = await request.send();
+        const response = await request.get<IGetGroupsForMemberResponse>();
 
-        return response.Response as IGetGroupsForMemberResponse;
+        return response.Response;
+    }
+
+    static async banMember(membershipType: BungieMembershipType, membershipId: number, groupId: number): Promise<number> {
+        const request = new Request(`/GroupV2/${groupId}/Members/${membershipType}/${membershipId}/Ban/`);
+        const response = await request.post<IGroupBanRequest, number>({
+            comment: 'Test',
+            length: 4
+        });
+
+        return response.Response;
     }
 }

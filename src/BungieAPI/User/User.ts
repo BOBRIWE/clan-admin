@@ -1,19 +1,11 @@
 import IGeneralUser from './IGeneralUser';
-import BungieAPICredentials from '../BungieAPICredentials';
-import IResponse from '../IResponse';
+import Request from '../Request';
 
 export default class User {
     static async getBungieNetUserById(userId: number): Promise<IGeneralUser> {
-        const fetchResponse = await fetch(
-            BungieAPICredentials.apiRoot + `/User/GetBungieNetUserById/${userId}/`,
-            {
-                method: 'GET',
-                headers: {
-                    'X-API-Key': BungieAPICredentials.apiKey
-                }
-            });
+        const request = new Request(`/User/GetBungieNetUserById/${userId}/`);
+        const response = await request.get<IGeneralUser>();
 
-        const json = await fetchResponse.json() as IResponse;
-        return json.Response as IGeneralUser;
+        return response.Response;
     }
 }

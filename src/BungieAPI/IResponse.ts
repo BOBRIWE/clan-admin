@@ -1,5 +1,5 @@
-export default interface IResponse {
-    Response: object
+export default interface IResponse<TResponse> {
+    Response: TResponse
     ErrorCode: number
     ThrottleSeconds: number
     ErrorStatus: string

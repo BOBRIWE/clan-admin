@@ -10,7 +10,6 @@ export default class Login extends React.Component{
             state: BungieAPICredentials.uuid
         };
 
-
         return (
             <main>
                 <a href={`https://www.bungie.net/en/oauth/authorize?${QueryString.stringify(authorizeOptions)}`}>Login!</a>

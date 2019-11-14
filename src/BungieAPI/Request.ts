@@ -10,14 +10,33 @@ export default class Request {
         this._requestPath = requestPath;
     }
 
-    async send(): Promise<IResponse> {
+    async get<TResponse>(): Promise<IResponse<TResponse>> {
         const fetchResponse = await fetch(
             BungieAPICredentials.apiRoot + this._requestPath,
             {
                 method: 'GET',
                 headers: {
                     'X-API-Key': BungieAPICredentials.apiKey,
-                    'Authorization' : 'Bearer ' + OAuth.acessToken.access_token
+                    'Authorization' : 'Bearer ' + OAuth.accessToken.access_token
+                }
+            });
+        return await fetchResponse.json();
+    }
+
+    async post<TBody, TResponse>(body: TBody): Promise<IResponse<TResponse>> {
+        const strBody = JSON.stringify(body);
+        const token = OAuth.accessToken.access_token;
+
+
+        const fetchResponse = await fetch(
+            BungieAPICredentials.apiRoot + this._requestPath,
+            {
+                method: 'POST',
+                body: strBody,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-API-Key': BungieAPICredentials.apiKey,
+                    'Authorization' : 'Bearer ' + token
                 }
             });
         return await fetchResponse.json();
