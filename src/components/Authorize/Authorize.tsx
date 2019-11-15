@@ -1,10 +1,10 @@
 import React from 'react';
 import {Redirect, RouteComponentProps} from 'react-router-dom';
 import QueryString from 'query-string';
-import OAuth from '../BungieAPI/OAuth/OAuth';
-import GroupsV2 from '../BungieAPI/GroupsV2/GroupsV2';
-import BungieMembershipType from '../BungieAPI/BungieMembershipType';
-import GroupType from '../BungieAPI/GroupsV2/GroupType';
+import OAuth from '../../BungieAPI/OAuth/OAuth';
+import GroupsV2 from '../../BungieAPI/GroupsV2/GroupsV2';
+import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
+import GroupType from '../../BungieAPI/GroupsV2/GroupType';
 
 interface IAuthorizeProps extends RouteComponentProps {
 

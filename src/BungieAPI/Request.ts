@@ -2,6 +2,7 @@ import IResponse from './IResponse';
 import BungieAPICredentials from './BungieAPICredentials';
 import QueryString from 'query-string';
 import OAuth from './OAuth/OAuth';
+import PlatformErrorCodes from './Exceptions/PlatformErrorCodes';
 
 export default class Request {
     private readonly _requestPath: string;
@@ -16,17 +17,23 @@ export default class Request {
             {
                 method: 'GET',
                 headers: {
-                    'X-API-Key': BungieAPICredentials.apiKey,
-                    'Authorization' : 'Bearer ' + OAuth.accessToken.access_token
+                    'Content-Type': 'application/json',
+                    'X-API-Key': BungieAPICredentials.apiKey
                 }
             });
-        return await fetchResponse.json();
+
+        const response = await fetchResponse.json() as IResponse<TResponse>;
+
+        if (response.ErrorCode !== PlatformErrorCodes.Success) {
+            throw new Error(response.Message);
+        }
+
+        return response;
     }
 
     async post<TBody, TResponse>(body: TBody): Promise<IResponse<TResponse>> {
         const strBody = JSON.stringify(body);
         const token = OAuth.accessToken.access_token;
-
 
         const fetchResponse = await fetch(
             BungieAPICredentials.apiRoot + this._requestPath,

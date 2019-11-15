@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import Login from './Login/Login';
+import Login from './components/Login/Login';
 import * as serviceWorker from './serviceWorker';
-import App from './App/App';
-import Authorize from './Authorize/Authorize';
+import App from './components/App/App';
+import Authorize from './components/Authorize/Authorize';
 
 
 ReactDOM.render((

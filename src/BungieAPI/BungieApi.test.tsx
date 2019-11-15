@@ -5,6 +5,8 @@ import BungieMembershipType from './BungieMembershipType';
 import DestinyComponentType from './Destiny/DestinyComponentType';
 import ActivityModeType from './Destiny/Definitions/ActivityModeType';
 import Request from './Request';
+import Common from './Common/Common';
+import ClanBanner from '../ClanBanner';
 
 it('should fetch clan', async () => {
     let clan = await GroupsV2.getClan(3990079);
@@ -59,4 +61,24 @@ it('should get access token', async () => {
     expect(token).not.toBe(undefined);
 });
 
-// https://localhost:3000/?code=8b126e045f766a35b13fea3c13a59b00&state=6i0mkLx79Hp91nzWVeHrzHG4
+it('should get common settings', async () => {
+    let settings = await Common.getCommonSettings();
+
+    expect(settings).not.toBe(undefined);
+});
+
+it('should get destiny manifest', async () => {
+    let manifest = await Destiny2.getDestinyManifest();
+
+    expect(manifest).not.toBe(undefined);
+});
+
+it('should return database data', async () => {
+    jest.setTimeout(3000000);
+    const clan = await GroupsV2.getClan(3990079);
+    const cb = new ClanBanner(clan.detail.clanInfo.clanBannerData);
+
+    const data = await cb.render();
+
+    expect(data).not.toBe(undefined);
+});

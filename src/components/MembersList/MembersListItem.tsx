@@ -1,5 +1,5 @@
 import React from 'react';
-import IGroupMember from '../BungieAPI/GroupsV2/IGroupMember';
+import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
 import './MembersListItem.scss';
 
 

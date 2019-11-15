@@ -3,11 +3,22 @@
   &-header {
     background-color: #282c34;
     width: 100%;
-    height: 60px;
   }
 
   &-article {
     display: grid;
     grid-template-columns: 2fr 1fr;
+  }
+
+  &-error-block {
+    background: red;
+    padding: 20px;
+    width: 100%;
+    opacity: .3;
+
+
+    &:empty {
+      display: none;
+    }
   }
 }

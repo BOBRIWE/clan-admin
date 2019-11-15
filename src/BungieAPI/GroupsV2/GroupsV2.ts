@@ -6,6 +6,7 @@ import IGetGroupsForMemberResponse from './IGetGroupsForMemberResponse';
 import BungieMembershipType from '../BungieMembershipType';
 import GroupType from './GroupType';
 import IGroupBanRequest from './IGroupBanRequest';
+import PlatformErrorCodes from '../Exceptions/PlatformErrorCodes';
 
 export default class GroupsV2 {
     static async getClan(clanId: number): Promise<IGroupResponse> {
@@ -37,11 +38,11 @@ export default class GroupsV2 {
         return response.Response;
     }
 
-    static async banMember(membershipType: BungieMembershipType, membershipId: number, groupId: number): Promise<number> {
+    static async banMember(membershipType: BungieMembershipType, membershipId: string, groupId: number, comment: string = ''): Promise<number> {
         const request = new Request(`/GroupV2/${groupId}/Members/${membershipType}/${membershipId}/Ban/`);
         const response = await request.post<IGroupBanRequest, number>({
-            comment: 'Test',
-            length: 4
+            comment: comment,
+            length: comment.length
         });
 
         return response.Response;

@@ -6,6 +6,7 @@ import DestinyComponentType from '../Destiny/DestinyComponentType';
 import ActivityModeType from '../Destiny/Definitions/ActivityModeType';
 import IDestinyActivityHistoryResults from '../Destiny/HistoricalStats/IDestinyActivityHistoryResults';
 import IDestinyPostGameCarnageReportData from '../Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
+import {IDestinyManifest} from './Config/IDestinyManifest';
 
 export default class Destiny2 {
     static async getLinkedProfiles(userId: number, membershipType: BungieMembershipType = -1): Promise<IDestinyLinkedProfilesResponse> {
@@ -41,5 +42,12 @@ export default class Destiny2 {
         const response = await request.get();
 
         return response.Response as IDestinyPostGameCarnageReportData;
+    }
+
+    static async getDestinyManifest() : Promise<IDestinyManifest> {
+        const request = new Request(`/Destiny2/Manifest/`);
+        const response = await request.get<IDestinyManifest>();
+
+        return response.Response;
     }
 }

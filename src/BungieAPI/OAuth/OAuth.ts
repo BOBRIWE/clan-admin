@@ -36,7 +36,6 @@ export default class OAuth {
 
     static get accessToken(): IAccessTokenObj {
         const str = localStorage.getItem('authorization') as string;
-        const strParse = JSON.parse(str);
-        return strParse;
+        return JSON.parse(str);
     }
 }
