@@ -8,6 +8,7 @@ import GroupsV2 from '../../BungieAPI/GroupsV2/GroupsV2';
 // import Header from '../Header/Header';
 // import IGroupV2 from '../BungieAPI/GroupsV2/IGroupV2';
 import IGroupResponse from '../../BungieAPI/GroupsV2/IGroupResponse';
+import Header from '../Header/Header';
 
 interface IAppURLParams {
     clan?: string | undefined;
@@ -19,7 +20,7 @@ interface IAppProps extends RouteComponentProps<IAppURLParams>{
 interface IAppState {
     members: IGroupMember[]
     errorMessage: string
-    clan?: IGroupResponse
+    clanTitle: string
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
@@ -28,7 +29,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
         this.state = {
             members: [],
-            errorMessage: ''
+            errorMessage: '',
+            clanTitle: ''
         };
     }
 
@@ -40,7 +42,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
         clanRequest
             .then((clan) => {
                 this.setState({
-                    clan: clan
+                    clanTitle: clan.detail.name
                 });
             })
             .catch((e: Error) => {
@@ -65,6 +67,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     render() {
         return (
             <section className="App">
+                <Header title={this.state.clanTitle} />
                 <main className="App-article">
                     <MembersList members={this.state.members}/>
                     <MemberInfo />

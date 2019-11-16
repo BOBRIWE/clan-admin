@@ -1,7 +1,7 @@
 import React from 'react';
+import './header.scss';
 
 interface IHeaderProps {
-    image: string
     title: string
 }
 
@@ -14,11 +14,12 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
         return (
             <header className="header">
                 <article className="header__logo">
-                    <section className="header__logo__title">Clan Admin</section>
-                    <section className="header__logo__subtitle">beta</section>
+                    <div className="header__logo__container">
+                        <section className="header__logo__title">Clan Admin</section>
+                        <section className="header__logo__subtitle">beta</section>
+                    </div>
                 </article>
                 <article className="header__clan">
-                    <section className="header__clan__image" style={{ backgroundImage: `url('${this.props.image}')` }}/>
                     <section className="header__clan__title">{this.props.title}</section>
                 </article>
             </header>
