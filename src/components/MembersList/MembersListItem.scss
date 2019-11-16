@@ -5,16 +5,80 @@
   grid-auto-flow: column;
   grid-template-columns: auto 1fr;
 
+  background: $dark100;
+
   box-sizing: border-box;
 
   &__body {
-    background: $dark100;
     color: $white100;
+    margin-left: 15px;
 
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: auto;
     justify-items: left;
+    column-gap: 20px;
+
+    &__item {
+      display: grid;
+      grid-auto-flow: row;
+      justify-items: center;
+
+      &__header {
+        font-family: Roboto, serif;
+        font-style: normal;
+        font-weight: 200;
+        font-size: 14px;
+        line-height: 16px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: $white100;
+
+        height: fit-content;
+        align-self: end;
+      }
+
+      &__caption {
+        font-family: Roboto, serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+        color: $white100;
+
+        height: fit-content;
+        align-self: start;
+      }
+    }
+  }
+
+
+
+  &__last-played {
+    width: 80px;
+  }
+
+  &__last-activity {
+    width: 110px;
+  }
+
+  &__activity-played {
+    width: 80px;
+  }
+
+  &__finished {
+    width: 50px;
+
+    &__yes {
+      text-transform: uppercase;
+      color: $green100;
+    }
+
+    &__no {
+      text-transform: uppercase;
+      color: $red100;
+    }
   }
 
   &__avatar {
@@ -27,16 +91,19 @@
 
   &__name {
     display: grid;
-    padding: 0 15px;
+    row-gap: 5px;
+    grid-auto-flow: row;
+    width: 150px;
+    overflow: hidden;
 
     &__main {
-      align-self: center;
+      align-self: end;
       justify-self: start;
       height: fit-content;
 
       font-family: Roboto, serif;
       font-style: normal;
-      font-weight: normal;
+      font-weight: bold;
       font-size: 16px;
       line-height: 19px;
 
