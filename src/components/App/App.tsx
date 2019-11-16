@@ -39,7 +39,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
         clanRequest
             .then((clan) => {
-                console.log(clan);
                 this.setState({
                     clan: clan
                 });
@@ -67,8 +66,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
         return (
             <section className="App">
                 <main className="App-article">
-                    {this.state.clan !== undefined ? <img src={'https://www.bungie.net' + this.state.clan.detail.avatarPath}/> : ''}
-                    {this.state.clan !== undefined ? <img src={'https://www.bungie.net' + this.state.clan.detail.bannerPath}/> : ''}
                     <MembersList members={this.state.members}/>
                     <MemberInfo />
                 </main>

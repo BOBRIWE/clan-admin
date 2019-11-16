@@ -15,11 +15,18 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
 
     render() {
         return (
-            <div className="MembersList__item MembersListItem">
-                <span className="MembersListItem__name">{this.props.member.bungieNetUserInfo.displayName}</span>
-                <span className="MembersListItem__online">Online: {this.props.member.isOnline ? "true" : "false"}</span>
-                <img alt='' className="MembersListItem__icon" src={'https://www.bungie.net'+this.props.member.bungieNetUserInfo.iconPath}/>
-            </div>
+            <section className="MembersList__item MembersListItem">
+                <article className="MembersListItem__avatar">
+                    <img alt='' src={'https://www.bungie.net'+this.props.member.bungieNetUserInfo.iconPath}/>
+                </article>
+
+                <article className="MembersListItem__body">
+                    <article className="MembersListItem__name">
+                        <span className="MembersListItem__name__main">{this.props.member.destinyUserInfo.displayName}</span>
+                        <span className="MembersListItem__name__bnet">{'Bnet: ' + this.props.member.bungieNetUserInfo.displayName}</span>
+                    </article>
+                </article>
+            </section>
         );
     }
 }
