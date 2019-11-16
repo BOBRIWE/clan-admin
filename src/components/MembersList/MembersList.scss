@@ -1,3 +1,5 @@
+@import "../../vendors/variables";
+
 .MembersList {
   display: grid;
   row-gap: 10px;
@@ -5,5 +7,20 @@
 
   &__item {
     height: 50px;
+  }
+
+  &__header {
+    width: 100%;
+    border-bottom: 1px solid $gray100;
+
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: $gray100;
+
+    text-align: left;
   }
 }

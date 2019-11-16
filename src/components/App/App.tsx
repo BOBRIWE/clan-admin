@@ -5,9 +5,6 @@ import MemberInfo from '../MemberInfo/MemberInfo';
 import { RouteComponentProps } from 'react-router-dom';
 import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
 import GroupsV2 from '../../BungieAPI/GroupsV2/GroupsV2';
-// import Header from '../Header/Header';
-// import IGroupV2 from '../BungieAPI/GroupsV2/IGroupV2';
-import IGroupResponse from '../../BungieAPI/GroupsV2/IGroupResponse';
 import Header from '../Header/Header';
 
 interface IAppURLParams {
@@ -69,7 +66,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
             <section className="App">
                 <Header title={this.state.clanTitle} />
                 <main className="App-article">
-                    <MembersList members={this.state.members}/>
+                    <MembersList groupName={'Clan Members'} members={this.state.members}/>
                     <MemberInfo />
                 </main>
             </section>

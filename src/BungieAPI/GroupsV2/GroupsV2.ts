@@ -6,7 +6,6 @@ import IGetGroupsForMemberResponse from './IGetGroupsForMemberResponse';
 import BungieMembershipType from '../BungieMembershipType';
 import GroupType from './GroupType';
 import IGroupBanRequest from './IGroupBanRequest';
-import PlatformErrorCodes from '../Exceptions/PlatformErrorCodes';
 
 export default class GroupsV2 {
     static async getClan(clanId: number): Promise<IGroupResponse> {
