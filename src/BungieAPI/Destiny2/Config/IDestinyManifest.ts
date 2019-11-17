@@ -5,9 +5,10 @@ export interface IDestinyManifest {
     version: string
     mobileAssetContentPath: string
     mobileGearAssetDataBases: IGearAssetDataBaseDefinition[]
-    mobileWorldContentPaths: string[]
-    jsonWorldContentPaths: string[]
+    mobileWorldContentPaths: { [key: string]: string }
+    jsonWorldContentPaths: { [key: string]: string }
+    jsonWorldComponentContentPaths: { [key: string]: { [key: string]: string } } // TODO: Not documented by bungie, be careful
     mobileClanBannerDatabasePath: string
-    mobileGearCDN: string[]
+    mobileGearCDN: { [key: string]: string }
     iconImagePyramidInfo: IImagePyramidEntry[]
 }

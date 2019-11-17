@@ -7,6 +7,10 @@ import ActivityModeType from './Destiny/Definitions/ActivityModeType';
 import Request from './Request';
 import Common from './Common/Common';
 import ClanBanner from '../ClanBanner';
+import Destiny from './Destiny/Destiny';
+import SupportedDefinitions from './Destiny/Definitions/SupportedDefinitions';
+import IDestinyActivityDefinition from './Destiny/Definitions/IDestinyActivityDefinition';
+import IDestinyActivityTypeDefinition from './Destiny/Definitions/IDestinyActivityTypeDefinition';
 
 it('should fetch clan', async () => {
     let clan = await GroupsV2.getClan(3990079);
@@ -73,8 +77,46 @@ it('should get destiny manifest', async () => {
     expect(manifest).not.toBe(undefined);
 });
 
+it('should get ru definitions', async () => {
+    const activity = await Destiny.getDefinition(SupportedDefinitions.DestinyActivityDefinition, 'ru');
+
+    expect(activity).not.toBe(undefined);
+});
+
+it('should get ru all definitions', async () => {
+    jest.setTimeout(30000);
+    const definitions = await Destiny.getAllDefinitions('ru');
+
+    expect(definitions).not.toBe(undefined);
+});
+
+it('should get specific raid data', async () => {
+    jest.setTimeout(30000);
+    const activity = await Destiny.getDefinition<{[key: string]: IDestinyActivityDefinition}>(SupportedDefinitions.DestinyActivityDefinition, 'ru');
+    let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
+    let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
+    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
+
+    let act = activity[history.activities[0].activityDetails.referenceId];
+
+    const activityTypes = await Destiny.getDefinition<{[key: string]: IDestinyActivityTypeDefinition}>(SupportedDefinitions.DestinyActivityTypeDefinition, 'ru');
+
+    const actType = activityTypes[act.activityTypeHash];
+
+    console.log(actType);
+    let raids = [];
+
+    for (let a in activity) {
+        if (activity[a].directActivityModeType === 4 && activity[a].tier === 0) {
+            raids.push(activity[a]);
+        }
+    }
+
+    console.log(raids);
+});
+
 it('should return database data', async () => {
-    jest.setTimeout(3000000);
+    jest.setTimeout(30000);
     const clan = await GroupsV2.getClan(3990079);
     const cb = new ClanBanner(clan.detail.clanInfo.clanBannerData);
 

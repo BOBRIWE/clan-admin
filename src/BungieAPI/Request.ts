@@ -13,14 +13,17 @@ export default class Request {
 
     async get<TResponse>(): Promise<IResponse<TResponse>> {
         const fetchResponse = await fetch(
-            BungieAPICredentials.apiRoot + this._requestPath,
+             BungieAPICredentials.apiRoot + this._requestPath,
             {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-API-Key': BungieAPICredentials.apiKey
                 }
             });
+
+        if (!fetchResponse.ok) {
+            throw new Error(fetchResponse.statusText);
+        }
 
         const response = await fetchResponse.json() as IResponse<TResponse>;
 
