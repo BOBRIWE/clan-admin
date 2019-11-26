@@ -3,7 +3,7 @@ import IDestinyPostGameCarnageReportEntry from './IDestinyPostGameCarnageReportE
 import IDestinyPostGameCarnageReportTeamEntry from './IDestinyPostGameCarnageReportTeamEntry';
 
 export default interface IDestinyPostGameCarnageReportData {
-    period: Date
+    period: string
     startingPhaseIndex: number
     activityDetails: IDestinyHistoricalStatsActivity
     entries: IDestinyPostGameCarnageReportEntry[]

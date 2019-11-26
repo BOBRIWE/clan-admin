@@ -8,9 +8,6 @@ import Request from './Request';
 import Common from './Common/Common';
 import ClanBanner from '../ClanBanner';
 import Destiny from './Destiny/Destiny';
-import SupportedDefinitions from './Destiny/Definitions/SupportedDefinitions';
-import IDestinyActivityDefinition from './Destiny/Definitions/IDestinyActivityDefinition';
-import IDestinyActivityTypeDefinition from './Destiny/Definitions/IDestinyActivityTypeDefinition';
 
 it('should fetch clan', async () => {
     let clan = await GroupsV2.getClan(3990079);
@@ -45,6 +42,8 @@ it('should fetch activity history', async () => {
 });
 
 it('should fetch team stats', async () => {
+    jest.setTimeout(30000);
+
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
@@ -78,7 +77,7 @@ it('should get destiny manifest', async () => {
 });
 
 it('should get ru definitions', async () => {
-    const activity = await Destiny.getDefinition(SupportedDefinitions.DestinyActivityDefinition, 'ru');
+    const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
 
     expect(activity).not.toBe(undefined);
 });
@@ -92,18 +91,18 @@ it('should get ru all definitions', async () => {
 
 it('should get specific raid data', async () => {
     jest.setTimeout(30000);
-    const activity = await Destiny.getDefinition<{[key: string]: IDestinyActivityDefinition}>(SupportedDefinitions.DestinyActivityDefinition, 'ru');
+    const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
 
     let act = activity[history.activities[0].activityDetails.referenceId];
 
-    const activityTypes = await Destiny.getDefinition<{[key: string]: IDestinyActivityTypeDefinition}>(SupportedDefinitions.DestinyActivityTypeDefinition, 'ru');
+    const activityTypes = (await Destiny.getAllDefinitions('ru')).DestinyActivityTypeDefinition;
 
     const actType = activityTypes[act.activityTypeHash];
 
-    console.log(actType);
+    expect(actType).not.toBe(undefined);
     let raids = [];
 
     for (let a in activity) {
@@ -113,6 +112,8 @@ it('should get specific raid data', async () => {
     }
 
     console.log(raids);
+
+    expect(raids).not.toBe(undefined);
 });
 
 it('should return database data', async () => {

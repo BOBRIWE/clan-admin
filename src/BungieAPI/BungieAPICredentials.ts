@@ -2,7 +2,7 @@ import uuidv4 from 'uuid/v4';
 
 export default class BungieAPICredentials {
     static get apiRoot(): string {
-        return 'https://www.bungie.net/Platform';
+        return 'https://stats.bungie.net/Platform';
     }
 
     static get bungieRoot(): string {

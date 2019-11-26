@@ -11,8 +11,9 @@ import IDestinyActivityGuidedBlockDefinition from './IDestinyActivityGuidedBlock
 import IDestinyActivityLoadoutRequirementSet from './IDestinyActivityLoadoutRequirementSet';
 import IDestinyActivityInsertionPointDefinition from './IDestinyActivityInsertionPointDefinition';
 import IDestinyEnvironmentLocationMapping from '../Constants/IDestinyEnvironmentLocationMapping';
+import IDestinyDefinition from "./IDestinyDefinition";
 
-export default interface IDestinyActivityDefinition {
+export default interface IDestinyActivityDefinition extends IDestinyDefinition  {
     displayProperties: IDestinyDisplayPropertiesDefinition
     originalDisplayProperties: IDestinyDisplayPropertiesDefinition
     selectionScreenDisplayProperties: IDestinyDisplayPropertiesDefinition
@@ -42,7 +43,4 @@ export default interface IDestinyActivityDefinition {
     isPvP: boolean
     insertionPoints: IDestinyActivityInsertionPointDefinition[]
     activityLocationMappings: IDestinyEnvironmentLocationMapping[]
-    hash: number
-    index: number
-    redacted: boolean
 }

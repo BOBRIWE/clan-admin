@@ -11,9 +11,9 @@ import {IDestinyManifest} from './Config/IDestinyManifest';
 export default class Destiny2 {
     static async getLinkedProfiles(userId: number, membershipType: BungieMembershipType = -1): Promise<IDestinyLinkedProfilesResponse> {
         const request = new Request(`/Destiny2/${membershipType}/Profile/${userId}/LinkedProfiles/`);
-        const response = await request.get();
+        const response = await request.get<IDestinyLinkedProfilesResponse>();
 
-        return response.Response as IDestinyLinkedProfilesResponse;
+        return response.Response;
     }
 
     static async getActivityHistory(
@@ -25,23 +25,23 @@ export default class Destiny2 {
         membershipType: BungieMembershipType = -1
     ): Promise<IDestinyActivityHistoryResults> {
         const request = new Request(`/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?mode=${mode}&count=${count}&page=${page}`);
-        const response = await request.get();
+        const response = await request.get<IDestinyActivityHistoryResults>();
 
-        return response.Response as IDestinyActivityHistoryResults;
+        return response.Response;
     }
 
-    static async getProfile(destinyMembershipId: number, components: DestinyComponentType = DestinyComponentType.Profiles, membershipType: BungieMembershipType = BungieMembershipType.All): Promise<IDestinyProfileResponse> {
+    static async getProfile(destinyMembershipId: number, components: DestinyComponentType = DestinyComponentType.Profiles, membershipType: BungieMembershipType = BungieMembershipType.TigerSteam): Promise<IDestinyProfileResponse> {
         const request = new Request(`/Destiny2/${membershipType}/Profile/${destinyMembershipId}/?components=${components}`);
-        const response = await request.get();
+        const response = await request.get<IDestinyProfileResponse>();
 
-        return response.Response as IDestinyProfileResponse;
+        return response.Response;
     }
 
     static async getPostGameCarnageReport(activityId: number): Promise<IDestinyPostGameCarnageReportData> {
         const request = new Request(`/Destiny2/Stats/PostGameCarnageReport/${activityId}/`);
-        const response = await request.get();
+        const response = await request.get<IDestinyPostGameCarnageReportData>();
 
-        return response.Response as IDestinyPostGameCarnageReportData;
+        return response.Response;
     }
 
     static async getDestinyManifest() : Promise<IDestinyManifest> {

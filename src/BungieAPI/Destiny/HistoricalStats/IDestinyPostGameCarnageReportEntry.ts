@@ -7,6 +7,6 @@ export default interface IDestinyPostGameCarnageReportEntry {
     score: IDestinyHistoricalStatsValue
     player: IDestinyPlayer
     characterId: number
-    values: IDestinyHistoricalStatsValue[]
+    values: {[key: string]: IDestinyHistoricalStatsValue}
     extended: IDestinyPostGameCarnageReportExtendedData
 }

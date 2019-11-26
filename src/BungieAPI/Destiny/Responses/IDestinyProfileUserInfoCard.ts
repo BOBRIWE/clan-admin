@@ -2,7 +2,7 @@ import GameVersions from './GameVersions';
 import BungieMembershipType from '../../BungieMembershipType';
 
 export default interface IDestinyProfileUserInfoCard {
-    dateLastPlayed: Date
+    dateLastPlayed: string
     isOverridden: boolean
     isCrossSavePrimary: boolean
     platformSilver: object // TODO add silver if needed

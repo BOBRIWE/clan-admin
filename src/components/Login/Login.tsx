@@ -1,8 +1,6 @@
 import React from 'react';
 import BungieAPICredentials from '../../BungieAPI/BungieAPICredentials';
 import QueryString from 'query-string';
-import Destiny from '../../BungieAPI/Destiny/Destiny';
-import SupportedDefinitions from '../../BungieAPI/Destiny/Definitions/SupportedDefinitions';
 
 export default class Login extends React.Component{
     render() {

@@ -9,7 +9,7 @@ export default interface IDestinyCharacterComponent {
     membershipId: number
     membershipType: BungieMembershipType
     characterId: number
-    dateLastPlayed: Date
+    dateLastPlayed: string
     minutesPlayedThisSession: number
     minutesPlayedTotal: number
     light: number

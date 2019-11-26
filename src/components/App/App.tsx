@@ -6,6 +6,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
 import GroupsV2 from '../../BungieAPI/GroupsV2/GroupsV2';
 import Header from '../Header/Header';
+import Destiny from "../../BungieAPI/Destiny/Destiny";
+import DefinitionsStorage from "../../LocalStorage/DefinitionsStorage";
 
 interface IAppURLParams {
     clan?: string | undefined;
@@ -36,6 +38,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
         const membersRequest = GroupsV2.getClanMembers(id);
         const clanRequest = GroupsV2.getClan(id);
 
+        this.updateDef().then(() => console.log('UPDATED!'));
+
         clanRequest
             .then((clan) => {
                 this.setState({
@@ -59,6 +63,11 @@ export default class App extends React.Component<IAppProps, IAppState> {
                     errorMessage: e.message
                 });
             });
+    }
+
+    async updateDef() {
+        const allDefinitions = await Destiny.getAllDefinitions('ru');
+        await DefinitionsStorage.update(allDefinitions);
     }
 
     render() {
