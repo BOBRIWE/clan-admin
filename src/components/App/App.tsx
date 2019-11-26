@@ -66,7 +66,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
             <section className="App">
                 <Header title={this.state.clanTitle} />
                 <main className="App-article">
-                    <MembersList groupName={'Clan Members'} members={this.state.members}/>
+                    <MembersList groupName={'Clan Members'} members={this.state.members} />
                     <MemberInfo />
                 </main>
             </section>

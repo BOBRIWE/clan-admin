@@ -1,0 +1,7 @@
+@import "../../vendors/variables";
+
+.separator {
+  height: calc(100vh - 60px);
+  width: 2px;
+  background-color: $dark100;
+}
