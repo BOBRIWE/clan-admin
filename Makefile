@@ -20,4 +20,7 @@ down: ## Stop all started for development containers
 clean: ## Remove images from local registry
 	$(docker_compose_bin) down --volumes --rmi local
 
+connect: ## Connect to node container
+	$(docker_compose_bin) exec "$(NODE_CONTAINER_NAME)" /bin/bash
+
 init: clean up

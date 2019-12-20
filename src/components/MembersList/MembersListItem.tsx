@@ -72,7 +72,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
                     return entry.player.destinyUserInfo.membershipId === this.props.member.destinyUserInfo.membershipId;
                 });
 
-                isFinished = !!(player !== undefined && player.values['completed'].basic.displayValue === 'Yes');
+                isFinished = (player !== undefined && player.values['completed'].basic.displayValue === 'Yes');
             }
 
             this.setState({
