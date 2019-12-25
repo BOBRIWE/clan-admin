@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import configureStore from "./store/configureStore";
 import AppContainer from './containers/AppContainer';
 
-
 ReactDOM.render((
     <Provider store={configureStore()}>
         <Router>

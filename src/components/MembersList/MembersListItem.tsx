@@ -9,12 +9,13 @@ import ActivityModeType from "../../BungieAPI/Destiny/Definitions/ActivityModeTy
 import IDestinyHistoricalStatsPeriodGroup
     from "../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup";
 import IDestinyActivityDefinition from "../../BungieAPI/Destiny/Definitions/IDestinyActivityDefinition";
-import DefinitionsStorage from "../../LocalStorage/DefinitionsStorage";
 import IDestinyPostGameCarnageReportData
     from "../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData";
+import {ISupportedDefinitions} from '../../BungieAPI/Destiny/Definitions/SupportedDefinitions';
 
 interface IMembersListItemProps {
     member: IGroupMember
+    definitions: ISupportedDefinitions
 }
 
 interface IMemberListItemState {
@@ -43,7 +44,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
             const { membershipId, membershipType } = this.props.member.destinyUserInfo;
             const profile = (await Destiny2.getProfile(membershipId)).profile;
             let activityDefinitions = null;
-            let activityDefinitionsReq = await DefinitionsStorage.getDefinitions();
+            let activityDefinitionsReq = this.props.definitions;
             if (activityDefinitionsReq !== undefined) {
                 activityDefinitions = activityDefinitionsReq.DestinyActivityDefinition;
             }

@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
-import clan from './clan';
-import {IClanMembersState} from '../constants/ClanMembersConstants';
+import { clan } from '../store/clan/reducers';
+import {IClanState} from '../store/clan/types';
+import {IDefinitionsState} from '../store/definitions/types';
+import {definitions} from '../store/definitions/reducers';
 
 export interface IRootReducer {
-    clan: IClanMembersState
+    clan: IClanState
+    definitions: IDefinitionsState
 }
 
 const rootReducer = combineReducers<IRootReducer>({
-    clan: clan
+    clan,
+    definitions
 });
 
 export default rootReducer;

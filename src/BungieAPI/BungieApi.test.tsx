@@ -9,13 +9,13 @@ import Common from './Common/Common';
 import ClanBanner from '../ClanBanner';
 import Destiny from './Destiny/Destiny';
 
-it('should fetch clan', async () => {
+it('should fetch reducers', async () => {
     let clan = await GroupsV2.getClan(3990079);
 
     expect(clan).not.toBe(undefined);
 });
 
-it('should fetch clan members', async () => {
+it('should fetch reducers members', async () => {
     let clanMembers = await GroupsV2.getClanMembers(3990079);
 
     expect(clanMembers).not.toBe(undefined);

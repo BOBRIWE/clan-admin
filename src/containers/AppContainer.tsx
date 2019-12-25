@@ -2,16 +2,20 @@ import App from '../components/App/App';
 import { connect } from 'react-redux';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { IClanMembersState } from '../constants/ClanMembersConstants';
 import {IRootReducer} from '../reducers';
-import { clanMembersFetch } from '../actions/ClanActions';
+import {clanMembersFetch, clanResponseFetch} from '../store/clan/actions';
+import {IClanState} from '../store/clan/types';
+import {IDefinitionsState} from '../store/definitions/types';
+import {definitionsFetch} from '../store/definitions/actions';
 
 interface IAppURLParams {
     clan?: string | undefined;
 }
 
-export interface IAppContainerProps extends RouteComponentProps<IAppURLParams>, IClanMembersState{
+export interface IAppContainerProps extends RouteComponentProps<IAppURLParams>, IClanState, IDefinitionsState {
     clanMembersFetch: (id: number) => void
+    clanResponseFetch: (id: number) => void
+    definitionsFetch: (lang: string) => void
 }
 
 interface IAppContainerState extends IRootReducer {
@@ -24,10 +28,14 @@ function AppContainer (props: IAppContainerProps) {
 
 function mapStateToProps (state: IAppContainerState) {
     return {
-        ...state.clan
+        clanMembers: state.clan.clanMembers,
+        clanResponse: state.clan.clanResponse,
+        definitions: state.definitions.definitions
     };
 }
 
 export default connect(mapStateToProps, {
-    clanMembersFetch: clanMembersFetch
+    clanMembersFetch: clanMembersFetch,
+    clanResponseFetch: clanResponseFetch,
+    definitionsFetch: definitionsFetch
 })(AppContainer);
