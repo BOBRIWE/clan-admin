@@ -52,7 +52,7 @@ it('should fetch team stats', async () => {
     expect(activityStats).not.toBe(undefined);
 });
 
-it('should fetch banned', async () => {
+it.skip('should fetch banned', async () => {
     let banned = await GroupsV2.getBannedMembersOfGroup(3990079);
 
     expect(banned).not.toBe(undefined);
@@ -116,7 +116,7 @@ it('should get specific raid data', async () => {
     expect(raids).not.toBe(undefined);
 });
 
-it('should return database data', async () => {
+it.skip('should return database data', async () => {
     jest.setTimeout(30000);
     const clan = await GroupsV2.getClan(3990079);
     const cb = new ClanBanner(clan.detail.clanInfo.clanBannerData);
