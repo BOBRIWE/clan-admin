@@ -33,7 +33,7 @@ it('should fetch linked accounts', async () => {
     expect(userAccounts).not.toBe(undefined);
 });
 
-it('should fetch activity history', async () => {
+it.skip('should fetch activity history', async () => {
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
