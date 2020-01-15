@@ -2,15 +2,12 @@ version: '3.3'
 
 services:
   node:
-    build:
-      dockerfile: Dockerfile
-      context: docker/node/
-    working_dir: /app
-    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    build: .
+    user: ${CURRENT_UID}
     restart: always
-
-    command: yarn start
+    command: yarn run start
     ports:
       - 3000:3000
     volumes:
       - .:/app
+      - /app/node_modules
