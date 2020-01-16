@@ -18,14 +18,12 @@ test:
   stage: test
   script:
     - cd /app
-    - ls
     - yarn test
 pages:
   image: $IMAGE_TAG
   stage: deploy
   script:
     - cd /app
-    - yarn build
     - rm -rf public
     - mv build public
     - cp public/index.html public/404.html
