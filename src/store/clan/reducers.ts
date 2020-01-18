@@ -23,6 +23,11 @@ export function clan(state = initialState, action: ClanActions): IClanState {
                 ...state,
                 clanResponse: undefined
             };
+        case CLAN.RESPONSE_FETCH_SUCCESS:
+            return {
+                ...state,
+                clanResponse: action.clanResponse
+            };
         default:
             return state;
     }
