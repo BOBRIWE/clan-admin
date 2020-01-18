@@ -19,7 +19,7 @@ export default class DateFormatter {
 
 
         if (diff > periods.month) {
-            return Math.floor(diff / periods.month) + "m ago";
+            return Math.floor(diff / periods.month) + "month ago";
         } else if (diff > periods.week) {
             return Math.floor(diff / periods.week) + "w ago";
         } else if (diff > periods.day) {

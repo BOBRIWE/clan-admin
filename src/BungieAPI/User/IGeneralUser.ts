@@ -12,7 +12,7 @@ export default interface IGeneralUser {
     successMessageFlags: number
     isDeleted: boolean
     about: string
-    firstAccess: Date
+    firstAccess: string
     lastUpdate: Date
     legacyPortalUID: number
     context: IUserToUserContext
