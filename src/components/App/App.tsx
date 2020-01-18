@@ -4,6 +4,7 @@ import MembersList from '../MembersList/MembersList';
 import MemberInfo from '../MemberInfo/MemberInfo';
 import Header from '../Header/Header';
 import {IAppContainerProps} from '../../containers/AppContainer';
+import Separator from '../Separator/Separator';
 
 interface IAppProps extends IAppContainerProps{
 }
@@ -34,6 +35,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
                 { this.props.clanResponse ? <Header title={this.props.clanResponse.detail.name} /> : null }
                 <main className="App-article">
                     {this.props.definitions !== null ? <MembersList groupName={'Clan Members'} members={this.props.clanMembers} definitions={this.props.definitions}/> : null}
+                    <Separator/>
                     <MemberInfo />
                 </main>
             </section>

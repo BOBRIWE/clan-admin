@@ -1,2 +1,31 @@
+@import 'src/vendors/variables';
+
 .MemberInfo {
+  padding: 30px;
+  background: no-repeat center center;
+  background-size: cover;
+
+  &__header {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 20px;
+  }
+
+  &__name {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 41px;
+    color: $white100;
+  }
+
+  &__age {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: $gray100;
+  }
 }

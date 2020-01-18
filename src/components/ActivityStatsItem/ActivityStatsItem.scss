@@ -1,0 +1,62 @@
+@import 'src/vendors/variables';
+
+.ActivityStatsItem {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 10px;
+  height: 36px;
+  background-color: $dark100;
+
+  &__avatar {
+    height: 36px;
+  }
+
+  &__main {
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  &__names {
+    display: grid;
+    grid-auto-flow: row;
+
+    &__main {
+      font-family: Roboto, serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 19px;
+      color: $white100;
+    }
+
+    &__bnet {
+      font-family: Roboto, serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      line-height: 12px;
+
+      color: $gray100;
+    }
+  }
+
+  &__stat {
+    &__name {
+      font-family: Roboto, serif;
+      font-style: normal;
+      font-weight: 200;
+      font-size: 12px;
+      line-height: 14px;
+      color: $white100;
+    }
+
+    &__value {
+      font-family: Roboto, serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 14px;
+      color: $white100;
+    }
+  }
+}
