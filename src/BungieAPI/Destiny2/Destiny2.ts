@@ -18,7 +18,7 @@ export default class Destiny2 {
 
     static async getActivityHistory(
         membershipId: number,
-        characterId: number,
+        characterId: string,
         mode: ActivityModeType = ActivityModeType.AllPvE,
         page: number = 0,
         count: number = 25,
