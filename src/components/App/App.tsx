@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import MembersList from '../MembersList/MembersList';
-import MemberInfo from '../MemberInfo/MemberInfo';
 import Header from '../Header/Header';
 import {IAppContainerProps} from '../../containers/AppContainer';
 import Separator from '../Separator/Separator';

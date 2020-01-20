@@ -1,33 +1,40 @@
 import React from 'react';
 import './ActivityStatsItem.scss';
+import IDestinyPostGameCarnageReportEntry
+    from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportEntry';
 
-class ActivityStatsItem extends React.Component {
+interface IActivityStatsItemProps {
+    member: IDestinyPostGameCarnageReportEntry
+}
+
+class ActivityStatsItem extends React.Component<IActivityStatsItemProps> {
     render() {
+        const {member} = this.props;
         return (
             <article className="ActivityStatsItem">
                 <header>
-                    <img className="ActivityStatsItem__avatar" alt="" src="https://www.bungie.net/img/profile/avatars/cc24.jpg"/>
+                    <img className="ActivityStatsItem__avatar" alt="" src={`https://www.bungie.net${member.player.destinyUserInfo.iconPath}`}/>
                 </header>
                 <main className="ActivityStatsItem__main">
                     <section className="ActivityStatsItem__names">
-                        <span className="ActivityStatsItem__names__main">BOBRoVICE</span>
-                        <span className="ActivityStatsItem__names__bnet">Bnet: BOBROVICE</span>
+                        <span className="ActivityStatsItem__names__main">{member.player.destinyUserInfo.displayName}</span>
+                        <span className="ActivityStatsItem__names__bnet">Bnet: {member.player.destinyUserInfo.supplementalDisplayName}</span>
                     </section>
                     <section className="ActivityStatsItem__stat">
                         <article className="ActivityStatsItem__stat__name">Kills:</article>
-                        <article className="ActivityStatsItem__stat__value">100</article>
+                        <article className="ActivityStatsItem__stat__value">{member.values['kills'].basic.displayValue}</article>
                     </section>
                     <section className="ActivityStatsItem__stat">
                         <article className="ActivityStatsItem__stat__name">Deaths:</article>
-                        <article className="ActivityStatsItem__stat__value">100</article>
+                        <article className="ActivityStatsItem__stat__value">{member.values['deaths'].basic.displayValue}</article>
                     </section>
                     <section className="ActivityStatsItem__stat">
                         <article className="ActivityStatsItem__stat__name">Assists:</article>
-                        <article className="ActivityStatsItem__stat__value">100</article>
+                        <article className="ActivityStatsItem__stat__value">{member.values['assists'].basic.displayValue}</article>
                     </section>
                     <section className="ActivityStatsItem__stat">
                         <article className="ActivityStatsItem__stat__name">MVP:</article>
-                        <article className="ActivityStatsItem__stat__value">3/6</article>
+                        <article className="ActivityStatsItem__stat__value">{member.values['teamScore'].basic.displayValue}</article>
                     </section>
                 </main>
             </article>

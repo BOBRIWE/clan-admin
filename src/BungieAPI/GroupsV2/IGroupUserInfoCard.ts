@@ -9,6 +9,6 @@ export default interface IGroupUserInfoCard {
     applicableMembershipTypes: BungieMembershipType[]
     isPublic: boolean
     membershipType: BungieMembershipType
-    membershipId: number
+    membershipId: string
     displayName: string
 }

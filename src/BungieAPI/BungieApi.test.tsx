@@ -36,7 +36,7 @@ it('should fetch linked accounts', async () => {
 it.skip('should fetch activity history', async () => {
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
-    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
+    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
 
     expect(history).not.toBe(undefined);
 });
@@ -46,7 +46,7 @@ it('should fetch team stats', async () => {
 
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
-    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
+    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
     let activityStats = await Destiny2.getPostGameCarnageReport(history.activities[0].activityDetails.instanceId);
 
     expect(activityStats).not.toBe(undefined);
@@ -94,7 +94,7 @@ it('should get specific raid data', async () => {
     const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
     let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
-    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0], ActivityModeType.Raid);
+    let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
 
     let act = activity[history.activities[0].activityDetails.referenceId];
 

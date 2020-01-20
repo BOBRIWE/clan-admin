@@ -42,7 +42,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
     async componentDidMount(): Promise<void> {
         try {
             const { membershipId, membershipType } = this.props.member.destinyUserInfo;
-            const profile = (await Destiny2.getProfile(membershipId)).profile;
+            const profile = (await Destiny2.getProfile(membershipId.toString())).profile;
             let activityDefinitions = null;
             let activityDefinitionsReq = this.props.definitions;
             if (activityDefinitionsReq !== undefined) {
@@ -52,7 +52,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
             let activities: IDestinyHistoricalStatsPeriodGroup[] = [];
 
             for (let index = 0; index < profile.data.characterIds.length; index++) {
-                const moreActivities = await Destiny2.getActivityHistory(membershipId, profile.data.characterIds[index], ActivityModeType.Raid, 0, 250, membershipType);
+                const moreActivities = await Destiny2.getActivityHistory(membershipId.toString(), profile.data.characterIds[index], ActivityModeType.Raid, 0, 250, membershipType);
 
                 if (moreActivities.activities === undefined) {
                     continue;

@@ -1,11 +1,19 @@
 import {connect} from 'react-redux';
+import MemberInfo from '../components/MemberInfo/MemberInfo';
 import React from 'react';
 import {IRootReducer} from '../reducers';
-import {IUserState} from '../store/user/types';
+import {memberInfoPostGameCarnageReportFetch, memberInfoProfileFetch} from '../store/memberInfo/actions';
+import DestinyComponentType from '../BungieAPI/Destiny/DestinyComponentType';
+import BungieMembershipType from '../BungieAPI/BungieMembershipType';
+import ActivityModeType from '../BungieAPI/Destiny/Definitions/ActivityModeType';
+import {IMemberInfoState} from '../store/memberInfo/types';
 import ActivityStats from '../components/ActivityStats/ActivityStats';
+import IDestinyPostGameCarnageReportData from '../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
 
-export interface IActivityStatsContainerProps extends IUserState {
-    activityReportFetch: (id: number) => void
+export interface IActivityStatsContainerProps {
+    activityId: string
+    postGameCarnageReport: IDestinyPostGameCarnageReportData | null
+    postGameCarnageReportFetch: (id: string) => void
 }
 
 interface IActivityStatsContainerState extends IRootReducer {
@@ -13,15 +21,16 @@ interface IActivityStatsContainerState extends IRootReducer {
 }
 
 function ActivityStatsContainer(props: IActivityStatsContainerProps) {
-    return <ActivityStats {...props}/>
+    return <ActivityStats {...props} />;
 }
 
 function mapStateToProps (state: IActivityStatsContainerState) {
     return {
-        userLinkedAccounts: state.user.userLinkedAccounts,
+        postGameCarnageReport: state.memberInfo.postGameCarnageReport
     };
 }
 
 export default connect(mapStateToProps, {
-
+    memberInfoFetch: memberInfoProfileFetch,
+    postGameCarnageReportFetch: memberInfoPostGameCarnageReportFetch
 })(ActivityStatsContainer);

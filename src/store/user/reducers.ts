@@ -3,7 +3,8 @@ import {UserActions} from './actions';
 
 const initialState: IUserState = {
     userLinkedAccounts: undefined,
-    generalUser: undefined
+    generalUser: undefined,
+    userProfile: undefined
 };
 
 export function userReducer(state = initialState, action: UserActions): IUserState {
@@ -27,6 +28,16 @@ export function userReducer(state = initialState, action: UserActions): IUserSta
             return {
                 ...state,
                 generalUser: action.generalUser
+            };
+        case USER.PROFILE_FETCH_START:
+            return {
+                ...state,
+                userProfile: undefined
+            };
+        case USER.PROFILE_FETCH_SUCCESS:
+            return {
+                ...state,
+                userProfile: action.userProfile
             };
         default:
             return state;

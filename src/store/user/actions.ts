@@ -1,7 +1,7 @@
 import {
     IUserGeneralUserFetchStartAction, IUserGeneralUserFetchSuccessAction,
     IUserLinkedAccountsFetchStartAction,
-    IUserLinkedAccountsFetchSuccessAction,
+    IUserLinkedAccountsFetchSuccessAction, IUserProfileFetchStartAction, IUserProfileFetchSuccessAction,
     USER
 } from './types';
 import IDestinyLinkedProfilesResponse from '../../BungieAPI/Destiny/Responses/IDestinyLinkedProfilesResponse';
@@ -10,11 +10,13 @@ import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
 import {ThunkAction} from 'redux-thunk';
 import IGeneralUser from '../../BungieAPI/User/IGeneralUser';
 import User from '../../BungieAPI/User/User';
+import IDestinyProfileResponse from '../../BungieAPI/Destiny/Responses/IDestinyProfileResponse';
+import DestinyComponentType from '../../BungieAPI/Destiny/DestinyComponentType';
 
 export function userLinkedAccountsFetch(id: number): ThunkAction<Promise<void>, undefined, undefined, UserLinkedAccountsActions>  {
     return async (dispatch) => {
         dispatch(userLinkedAccountsFetchStart(id));
-        const userLinkedAccounts = await Destiny2.getLinkedProfiles(id, BungieMembershipType.All);
+        const userLinkedAccounts = await Destiny2.getLinkedProfiles(id.toString(), BungieMembershipType.All);
         dispatch(userLinkedAccountsFetchSuccess(id, userLinkedAccounts));
     };
 }
@@ -57,7 +59,31 @@ function userGeneralUserFetchSuccess(id: number, generalUser: IGeneralUser): IUs
     };
 }
 
+function userProfileFetchStart(id: string): IUserProfileFetchStartAction {
+    return {
+        type: USER.PROFILE_FETCH_START,
+        id
+    };
+}
+
+function userProfileFetchSuccess(id: string, userProfile: IDestinyProfileResponse): IUserProfileFetchSuccessAction {
+    return {
+        type: USER.PROFILE_FETCH_SUCCESS,
+        id,
+        userProfile
+    };
+}
+
+export function userProfileFetch(id: string, destinyComponentType: DestinyComponentType, bungieMembershipType: BungieMembershipType): ThunkAction<Promise<void>, undefined, undefined, UserProfileActions> {
+    return async (dispatch) => {
+        dispatch(userProfileFetchStart(id));
+        const profile = await Destiny2.getProfile(id, destinyComponentType, bungieMembershipType);
+        dispatch(userProfileFetchSuccess(id, profile));
+    };
+}
+
 export type UserLinkedAccountsActions = IUserLinkedAccountsFetchStartAction | IUserLinkedAccountsFetchSuccessAction;
 export type UserGeneralUserActions = IUserGeneralUserFetchStartAction | IUserGeneralUserFetchSuccessAction;
+export type UserProfileActions = IUserProfileFetchStartAction | IUserProfileFetchSuccessAction;
 
-export type UserActions = UserLinkedAccountsActions | UserGeneralUserActions;
+export type UserActions = UserLinkedAccountsActions | UserGeneralUserActions | UserProfileActions;

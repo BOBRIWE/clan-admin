@@ -7,6 +7,6 @@ export default interface IUserInfoCard {
     applicableMembershipTypes: BungieMembershipType[]
     isPublic: boolean
     membershipType: BungieMembershipType
-    membershipId: number
+    membershipId: string
     displayName: string
 }

@@ -4,6 +4,6 @@ export default interface IDestinyProfileComponent {
     userInfo: IUserInfoCard
     dateLastPlayed: string
     versionsOwned: number
-    characterIds: number[]
+    characterIds: string[]
     seasonHashes: number[]
 }
