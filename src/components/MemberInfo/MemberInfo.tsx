@@ -4,7 +4,6 @@ import {IMemberInfoContainerProps} from '../../containers/MemberInfoContainer';
 import DestinyComponentType from '../../BungieAPI/Destiny/DestinyComponentType';
 import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
 import ActivityModeType from '../../BungieAPI/Destiny/Definitions/ActivityModeType';
-import ActivityStats from '../ActivityStats/ActivityStats';
 import ActivityStatsContainer from '../../containers/ActivityStatsContainer';
 
 interface IMemberInfoProps extends IMemberInfoContainerProps {
