@@ -29,14 +29,32 @@ export default class App extends React.Component<IAppProps, IAppState> {
         this.props.clanResponseFetch(id);
     }
 
+    selectedMemberCallback(id: string) {
+        this.props.changeSelectedMember(id);
+    }
+
     render() {
+        console.log(this.props.selectedMember);
         return (
             <section className="App">
                 { this.props.clanResponse ? <Header title={this.props.clanResponse.detail.name} /> : null }
                 <main className="App-article">
-                    {this.props.definitions !== null ? <MembersList groupName={'Clan Members'} members={this.props.clanMembers} definitions={this.props.definitions}/> : null}
+                    {
+                        this.props.definitions !== null ?
+                            <MembersList
+                                selectUserCallback={this.selectedMemberCallback.bind(this)}
+                                groupName={'Clan Members'} members={this.props.clanMembers}
+                                definitions={this.props.definitions}/>
+                                :
+                            null
+                    }
                     <Separator/>
-                    <MemberInfoContainer/>
+                    {
+                        this.props.selectedMember !== '' ?
+                            <MemberInfoContainer selectedMember={this.props.selectedMember}/>
+                            :
+                            null
+                    }
                 </main>
             </section>
         );

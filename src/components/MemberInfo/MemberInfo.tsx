@@ -11,9 +11,29 @@ interface IMemberInfoProps extends IMemberInfoContainerProps {
 
 }
 
-class MemberInfo extends React.Component<IMemberInfoProps> {
+interface IMemberInfoState {
+    currentId: string
+}
+
+class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
+    constructor(props: IMemberInfoProps) {
+        super(props);
+
+        this.state = {
+            currentId: ''
+        };
+    }
+
     componentDidMount(): void {
-        this.props.memberInfoFetch('4611686018467791316', DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
+        this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
+        this.setState({currentId: this.props.selectedMember});
+    }
+
+    componentDidUpdate(prevProps: Readonly<IMemberInfoProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (this.state.currentId !== this.props.selectedMember) {
+            this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
+            this.setState({currentId: this.props.selectedMember});
+        }
     }
 
     render() {

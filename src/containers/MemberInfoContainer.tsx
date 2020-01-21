@@ -11,6 +11,7 @@ import {IMemberInfoState} from '../store/memberInfo/types';
 export interface IMemberInfoContainerProps extends IMemberInfoState {
     memberInfoFetch: (id: string, destinyComponentType: DestinyComponentType, bungieMembershipType: BungieMembershipType, activityModeType: ActivityModeType) => void
     postGameCarnageReportFetch: (id: string) => void
+    selectedMember: string
 }
 
 interface IMemberInfoContainerState extends IRootReducer {

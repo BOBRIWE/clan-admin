@@ -8,6 +8,7 @@ interface IMembersListProps {
     members: IGroupMember[]
     groupName: string
     definitions: ISupportedDefinitions
+    selectUserCallback: (id: string) => void
 }
 
 interface IMembersListState {
@@ -20,7 +21,14 @@ class MembersList extends React.Component<IMembersListProps, IMembersListState> 
                 <span className="MembersList__header">{this.props.groupName}</span>
                 {
                     this.props.members.map((member) => {
-                        return <MembersListItem key={member.bungieNetUserInfo.membershipId} member={member} definitions={this.props.definitions}/>;
+                        return <MembersListItem
+                            onClick={() => {
+                                this.props.selectUserCallback(member.destinyUserInfo.membershipId);
+                            }}
+                            key={member.bungieNetUserInfo.membershipId}
+                            member={member}
+                            definitions={this.props.definitions}
+                        />;
                     })
                 }
             </article>

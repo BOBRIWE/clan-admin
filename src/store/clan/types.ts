@@ -8,9 +8,11 @@ export enum CLAN {
 
     RESPONSE_FETCH_START = 'CLAN_RESPONSE_FETCH_START',
     RESPONSE_FETCH_SUCCESS = 'CLAN_RESPONSE_FETCH_SUCCESS',
+
+    SELECTED_MEMBER_CHANGED = 'CLAN_SELECTED_MEMBER_CHANGED',
 }
 
-export interface IClanState extends IClanMembersState, IClanResponseState{
+export interface IClanState extends IClanMembersState, IClanResponseState, ISelectedMemberState {
 
 }
 
@@ -41,4 +43,12 @@ export interface IClanResponseFetchSuccessAction extends IClanResponseState{
 
 export interface IClanResponseState {
     clanResponse?: IGroupResponse
+}
+
+export interface ISelectedMemberChangedAction extends ISelectedMemberState {
+    type: typeof CLAN.SELECTED_MEMBER_CHANGED
+}
+
+export interface ISelectedMemberState {
+    selectedMember: string
 }

@@ -81,14 +81,17 @@ export function memberInfoProfileFetch(
     > {
     return async (dispatch) => {
         dispatch(memberInfoLinkedProfilesFetchStart(id));
+        dispatch(memberInfoDestinyProfileFetchStart(id));
+        dispatch(memberInfoActivityHistoryFetchStart(id));
+
         const linkedProfiles = await Destiny2.getLinkedProfiles(id, BungieMembershipType.All);
         dispatch(memberInfoLinkedProfilesFetchSuccess(id, linkedProfiles));
 
-        dispatch(memberInfoDestinyProfileFetchStart(id));
+
         const profile = await Destiny2.getProfile(id, destinyComponentType, bungieMembershipType);
         dispatch(memberInfoDestinyProfileFetchSuccess(id, profile));
 
-        dispatch(memberInfoActivityHistoryFetchStart(id));
+
         const history: IDestinyActivityHistoryResults[] = [];
         for (let charId of profile.profile.data.characterIds) {
             history.push(await Destiny2.getActivityHistory(id, charId, activityModeType));

@@ -16,6 +16,7 @@ import {ISupportedDefinitions} from '../../BungieAPI/Destiny/Definitions/Support
 interface IMembersListItemProps {
     member: IGroupMember
     definitions: ISupportedDefinitions
+    onClick: (e: React.MouseEvent) => void
 }
 
 interface IMemberListItemState {
@@ -90,7 +91,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
 
     render() {
         return (
-            <section className="MembersList__item MembersListItem">
+            <section className="MembersList__item MembersListItem" onClick={this.props.onClick}>
                 <article className="MembersListItem__avatar">
                     <img alt='' src={'https://www.bungie.net' + this.props.member.bungieNetUserInfo.iconPath}/>
                 </article>

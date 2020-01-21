@@ -3,7 +3,8 @@ import {CLAN, IClanState} from './types';
 
 const initialState: IClanState = {
     clanMembers: [],
-    clanResponse: undefined
+    clanResponse: undefined,
+    selectedMember: ''
 };
 
 export function clan(state = initialState, action: ClanActions): IClanState {
@@ -27,6 +28,11 @@ export function clan(state = initialState, action: ClanActions): IClanState {
             return {
                 ...state,
                 clanResponse: action.clanResponse
+            };
+        case CLAN.SELECTED_MEMBER_CHANGED:
+            return {
+                ...state,
+                selectedMember: action.selectedMember
             };
         default:
             return state;
