@@ -8,6 +8,7 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
+    - build/
 
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
@@ -23,8 +24,9 @@ build:
 test:
   stage: test
   allow_failure: true
-#  before_script:
-#    - yarn install
+  before_script:
+    - yarn install
+    - yarn build
   script:
     - yarn test
 pages:
