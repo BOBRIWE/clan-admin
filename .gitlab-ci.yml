@@ -1,11 +1,21 @@
-image: docker:stable
+image: node:12
 stages:
   - build
   - test
   - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+before_script:
+  - yarn install
+
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
 build:
+  image: docker:stable
   stage: build
   services:
     - docker:dind
@@ -14,17 +24,15 @@ build:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 test:
-  image: $IMAGE_TAG
   stage: test
   allow_failure: true
   script:
     - cd /app
     - yarn test
 pages:
-  image: $IMAGE_TAG
   stage: deploy
   script:
-    - cd /app
+    - ls
     - rm -rf public
     - mv build public
     - cp public/index.html public/404.html
