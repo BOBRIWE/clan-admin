@@ -1,30 +1,29 @@
 image: docker:stable
 stages:
-#  - build
-#  - test
+  - build
+  - test
   - deploy
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
-#build:
-#  stage: build
-#  services:
-#    - docker:dind
-#  script:
-#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-#    - docker build -t $IMAGE_TAG .
-#    - docker push $IMAGE_TAG
-#test:
-#  image: $IMAGE_TAG
-#  stage: test
-#  script:
-#    - cd /app
-#    - yarn test
+build:
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+test:
+  image: $IMAGE_TAG
+  stage: test
+  script:
+    - cd /app
+    - yarn test
 pages:
-  image: .
+  image: $IMAGE_TAG
   stage: deploy
   script:
-    - yarn install
-    - yarn build
+    - cd /app
     - rm -rf public
     - mv build public
     - cp public/index.html public/404.html
