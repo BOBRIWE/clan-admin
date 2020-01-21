@@ -16,6 +16,7 @@ build:
 test:
   image: $IMAGE_TAG
   stage: test
+  allow_failure: true
   script:
     - cd /app
     - yarn test
