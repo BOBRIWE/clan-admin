@@ -23,8 +23,8 @@ build:
 test:
   stage: test
   allow_failure: true
-  before_script:
-    - yarn install
+#  before_script:
+#    - yarn install
   script:
     - yarn test
 pages:
