@@ -5,13 +5,15 @@ import DestinyComponentType from '../../BungieAPI/Destiny/DestinyComponentType';
 import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
 import ActivityModeType from '../../BungieAPI/Destiny/Definitions/ActivityModeType';
 import ActivityStatsContainer from '../../containers/ActivityStatsContainer';
+import ActivityChart from '../ActivityChart/ActivityChart';
 
 interface IMemberInfoProps extends IMemberInfoContainerProps {
 
 }
 
 interface IMemberInfoState {
-    currentId: string
+    currentId: string,
+    currentActivivtyId: string | null
 }
 
 class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
@@ -19,7 +21,8 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
         super(props);
 
         this.state = {
-            currentId: ''
+            currentId: '',
+            currentActivivtyId: null
         };
     }
 
@@ -35,9 +38,19 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
         }
     }
 
+    updateActivityStats(id: string) {
+        this.setState({currentActivivtyId: id});
+    }
+
     render() {
+        if (this.state.currentActivivtyId === null && this.props.activityHistories.length > 0) {
+            this.setState({currentActivivtyId: this.props.activityHistories[0].activities[0].activityDetails.instanceId});
+        }
+
+
         return (
-            <section className="MemberInfo" style={{backgroundImage: `url(${'https://www.bungie.net/img/destiny_content/pgcr/raids.1305rh0093145r13t5hn10tnz.raid_sunset.jpg'})`}}>
+            // <section className="MemberInfo" style={{backgroundImage: `url(${'https://www.bungie.net/img/destiny_content/pgcr/raids.1305rh0093145r13t5hn10tnz.raid_sunset.jpg'})`}}>
+            <section className="MemberInfo">
                 <header className="MemberInfo__header">
                     { this.props.memberInfoLinkedAccounts && this.props.memberInfoLinkedAccounts.profiles
                         ? <span className="MemberInfo__name">{this.props.memberInfoLinkedAccounts.profiles[0].displayName}</span>
@@ -52,7 +65,16 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
                 </header>
                 <main>
                     {
-                        this.props.activityHistories.length > 0 ? <ActivityStatsContainer  activityId={this.props.activityHistories[0].activities[0].activityDetails.instanceId}/>
+                        this.props.activityHistories.length > 0 ?
+                            <ActivityChart onPointClicked={this.updateActivityStats.bind(this)} activityData={this.props.activityHistories}/>
+                            :
+                            null
+                    }
+                    {
+                        this.props.activityHistories.length > 0 && this.state.currentActivivtyId !== null ?
+                            <ActivityStatsContainer
+                                activityId={this.state.currentActivivtyId}
+                            />
                             : null
                     }
                 </main>

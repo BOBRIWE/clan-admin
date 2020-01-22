@@ -2,8 +2,9 @@
 
 .MemberInfo {
   padding: 30px;
-  background: no-repeat center center;
   background-size: cover;
+  min-width: 600px;
+  background: $gray100 no-repeat center center;
 
   &__header {
     display: grid;

@@ -13,6 +13,12 @@ class ActivityStats extends React.Component<IActivityStatsProps> {
         this.props.postGameCarnageReportFetch(this.props.activityId);
     }
 
+    componentDidUpdate(prevProps: Readonly<IActivityStatsProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (prevProps.activityId !== this.props.activityId) {
+            this.props.postGameCarnageReportFetch(this.props.activityId);
+        }
+    }
+
     render() {
         return (
             <section className="ActivityStats">

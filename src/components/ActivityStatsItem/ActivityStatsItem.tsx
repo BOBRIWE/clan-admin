@@ -11,7 +11,7 @@ class ActivityStatsItem extends React.Component<IActivityStatsItemProps> {
     render() {
         const {member} = this.props;
         return (
-            <article className="ActivityStatsItem">
+            <article className={`ActivityStatsItem ${member.values['completed'].basic.displayValue === 'Yes' ? '' : 'ActivityStatsItem--not-finished'}`}>
                 <header>
                     <img className="ActivityStatsItem__avatar" alt="" src={`https://www.bungie.net${member.player.destinyUserInfo.iconPath}`}/>
                 </header>

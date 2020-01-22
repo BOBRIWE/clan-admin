@@ -21,7 +21,7 @@ export default class Destiny2 {
         characterId: string,
         mode: ActivityModeType = ActivityModeType.AllPvE,
         page: number = 0,
-        count: number = 25,
+        count: number = 250,
         membershipType: BungieMembershipType = -1
     ): Promise<IDestinyActivityHistoryResults> {
         const request = new Request(`/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?mode=${mode}&count=${count}&page=${page}`);

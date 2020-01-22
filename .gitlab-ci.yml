@@ -41,4 +41,3 @@ pages:
       - public
   only:
     - master
-    - member-info

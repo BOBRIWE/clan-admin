@@ -4,5 +4,5 @@ import IDestinyHistoricalStatsValue from './IDestinyHistoricalStatsValue';
 export default interface IDestinyHistoricalStatsPeriodGroup {
     period: string
     activityDetails: IDestinyHistoricalStatsActivity
-    values: IDestinyHistoricalStatsValue[]
+    values: {[key: string]: IDestinyHistoricalStatsValue}
 }

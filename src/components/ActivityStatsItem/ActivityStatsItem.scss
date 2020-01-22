@@ -7,6 +7,10 @@
   height: 36px;
   background-color: $dark100;
 
+  &--not-finished {
+    border: 3px solid red;
+  }
+
   &__avatar {
     height: 36px;
   }
