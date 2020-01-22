@@ -1,6 +1,5 @@
 import IDestinyLinkedProfilesResponse from '../../BungieAPI/Destiny/Responses/IDestinyLinkedProfilesResponse';
 import IDestinyProfileResponse from '../../BungieAPI/Destiny/Responses/IDestinyProfileResponse';
-import IDestinyActivityHistoryResults from '../../BungieAPI/Destiny/HistoricalStats/IDestinyActivityHistoryResults';
 import IDestinyPostGameCarnageReportData
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
 import IDestinyHistoricalStatsPeriodGroup
