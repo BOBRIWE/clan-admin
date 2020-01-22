@@ -18,7 +18,6 @@ import Destiny2 from '../../BungieAPI/Destiny2/Destiny2';
 import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
 import IDestinyProfileResponse from '../../BungieAPI/Destiny/Responses/IDestinyProfileResponse';
 import DestinyComponentType from '../../BungieAPI/Destiny/DestinyComponentType';
-import IDestinyActivityHistoryResults from '../../BungieAPI/Destiny/HistoricalStats/IDestinyActivityHistoryResults';
 import ActivityModeType from '../../BungieAPI/Destiny/Definitions/ActivityModeType';
 import IDestinyPostGameCarnageReportData
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
