@@ -1,5 +1,5 @@
 import React, {RefObject} from 'react';
-import Chart, {ChartElementsOptions} from 'chart.js';
+import Chart from 'chart.js';
 import IDestinyHistoricalStatsPeriodGroup
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
 
@@ -19,14 +19,12 @@ class ActivityChart extends React.Component<IActivityChartProps> {
     }
 
     componentDidMount() {
-        let temp = 0;
         let timeString: string[] = [];
         let colors: string[] = [];
 
         const cut = this.props.activityData.slice(0, 25);
 
         let time1 = cut.map((item) => {
-            temp += 1;
             timeString.push(new Date(item.period).toLocaleDateString());
 
             colors.push(item.values['completed'].basic.displayValue === 'Yes' ? '#00ff00' : '#ff0000');
