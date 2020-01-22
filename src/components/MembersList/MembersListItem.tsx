@@ -16,6 +16,7 @@ import {ISupportedDefinitions} from '../../BungieAPI/Destiny/Definitions/Support
 interface IMembersListItemProps {
     member: IGroupMember
     definitions: ISupportedDefinitions
+    onClick: (e: React.MouseEvent) => void
 }
 
 interface IMemberListItemState {
@@ -42,7 +43,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
     async componentDidMount(): Promise<void> {
         try {
             const { membershipId, membershipType } = this.props.member.destinyUserInfo;
-            const profile = (await Destiny2.getProfile(membershipId)).profile;
+            const profile = (await Destiny2.getProfile(membershipId.toString())).profile;
             let activityDefinitions = null;
             let activityDefinitionsReq = this.props.definitions;
             if (activityDefinitionsReq !== undefined) {
@@ -52,7 +53,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
             let activities: IDestinyHistoricalStatsPeriodGroup[] = [];
 
             for (let index = 0; index < profile.data.characterIds.length; index++) {
-                const moreActivities = await Destiny2.getActivityHistory(membershipId, profile.data.characterIds[index], ActivityModeType.Raid, 0, 250, membershipType);
+                const moreActivities = await Destiny2.getActivityHistory(membershipId.toString(), profile.data.characterIds[index], ActivityModeType.Raid, 0, 250, membershipType);
 
                 if (moreActivities.activities === undefined) {
                     continue;
@@ -90,7 +91,7 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
 
     render() {
         return (
-            <section className="MembersList__item MembersListItem">
+            <section className="MembersList__item MembersListItem" onClick={this.props.onClick}>
                 <article className="MembersListItem__avatar">
                     <img alt='' src={'https://www.bungie.net' + this.props.member.bungieNetUserInfo.iconPath}/>
                 </article>

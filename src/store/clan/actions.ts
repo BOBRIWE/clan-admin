@@ -2,7 +2,9 @@ import {
     CLAN,
     IClanMembersFetchStartAction,
     IClanMembersFetchSuccessAction,
-    IClanResponseFetchStartAction, IClanResponseFetchSuccessAction
+    IClanResponseFetchStartAction,
+    IClanResponseFetchSuccessAction,
+    ISelectedMemberChangedAction
 } from './types';
 import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
 import GroupsV2 from '../../BungieAPI/GroupsV2/GroupsV2';
@@ -55,7 +57,15 @@ function clanResponseFetchSuccess(id: number, clanResponse: IGroupResponse): ICl
     };
 }
 
+export function changeSelectedMember(newId: string): ISelectedMemberChangedAction {
+    return {
+        type: CLAN.SELECTED_MEMBER_CHANGED,
+        selectedMember: newId
+    };
+}
+
+
 export type ClanMemberActions = IClanMembersFetchStartAction | IClanMembersFetchSuccessAction;
 export type ClanResponseActions = IClanResponseFetchStartAction | IClanResponseFetchSuccessAction;
 
-export type ClanActions = ClanMemberActions | ClanResponseActions;
+export type ClanActions = ClanMemberActions | ClanResponseActions | ISelectedMemberChangedAction;
