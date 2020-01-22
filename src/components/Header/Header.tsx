@@ -16,7 +16,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
                 <article className="header__logo">
                     <div className="header__logo__container">
                         <section className="header__logo__title">Clan Admin</section>
-                        <section className="header__logo__subtitle">beta</section>
+                        <section className="header__logo__subtitle">alfa</section>
                     </div>
                 </article>
                 <article className="header__clan">
