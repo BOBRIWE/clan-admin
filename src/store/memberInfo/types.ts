@@ -3,6 +3,8 @@ import IDestinyProfileResponse from '../../BungieAPI/Destiny/Responses/IDestinyP
 import IDestinyActivityHistoryResults from '../../BungieAPI/Destiny/HistoricalStats/IDestinyActivityHistoryResults';
 import IDestinyPostGameCarnageReportData
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
+import IDestinyHistoricalStatsPeriodGroup
+    from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
 
 export enum MEMBER_INFO {
     LINKED_ACCOUNTS_FETCH_START = 'MEMBER_INFO_LINKED_ACCOUNTS_FETCH_START',
@@ -59,7 +61,7 @@ export interface IMemberInfoActivityHistoryFetchSuccessAction extends IMemberInf
 }
 
 export interface IMemberInfoActivityHistoryState {
-    activityHistories: IDestinyActivityHistoryResults[]
+    activityHistories: IDestinyHistoricalStatsPeriodGroup[]
 }
 
 
