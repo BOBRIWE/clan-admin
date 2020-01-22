@@ -44,7 +44,7 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
 
     render() {
         if (this.state.currentActivivtyId === null && this.props.activityHistories.length > 0) {
-            this.setState({currentActivivtyId: this.props.activityHistories[0].activities[0].activityDetails.instanceId});
+            this.setState({currentActivivtyId: this.props.activityHistories[0].activityDetails.instanceId});
         }
 
 

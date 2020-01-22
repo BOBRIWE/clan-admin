@@ -1,9 +1,10 @@
 import React, {RefObject} from 'react';
 import Chart, {ChartElementsOptions} from 'chart.js';
-import IDestinyActivityHistoryResults from '../../BungieAPI/Destiny/HistoricalStats/IDestinyActivityHistoryResults';
+import IDestinyHistoricalStatsPeriodGroup
+    from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
 
 interface IActivityChartProps {
-    activityData: IDestinyActivityHistoryResults[]
+    activityData: IDestinyHistoricalStatsPeriodGroup[]
     onPointClicked: (id: string) => void
 }
 
@@ -22,7 +23,7 @@ class ActivityChart extends React.Component<IActivityChartProps> {
         let timeString: string[] = [];
         let colors: string[] = [];
 
-        const cut = this.props.activityData[0].activities.slice(0, 25);
+        const cut = this.props.activityData.slice(0, 25);
 
         let time1 = cut.map((item) => {
             temp += 1;
@@ -64,7 +65,7 @@ class ActivityChart extends React.Component<IActivityChartProps> {
         // @ts-ignore
         const index: number = activePoints[0]._index;
 
-        this.props.onPointClicked(this.props.activityData[0].activities[index].activityDetails.instanceId);
+        this.props.onPointClicked(this.props.activityData[index].activityDetails.instanceId);
     }
 
     render() {

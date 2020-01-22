@@ -22,6 +22,8 @@ import IDestinyActivityHistoryResults from '../../BungieAPI/Destiny/HistoricalSt
 import ActivityModeType from '../../BungieAPI/Destiny/Definitions/ActivityModeType';
 import IDestinyPostGameCarnageReportData
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
+import IDestinyHistoricalStatsPeriodGroup
+    from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
 
 function memberInfoLinkedProfilesFetchStart(id: string): IMemberInfoLinkedAccountsFetchStartAction {
     return {
@@ -60,7 +62,7 @@ function memberInfoActivityHistoryFetchStart(id: string): IMemberInfoActivityHis
     };
 }
 
-function memberInfoActivityHistoryFetchSuccess(id: string, activityHistories: IDestinyActivityHistoryResults[]): IMemberInfoActivityHistoryFetchSuccessAction {
+function memberInfoActivityHistoryFetchSuccess(id: string, activityHistories: IDestinyHistoricalStatsPeriodGroup[]): IMemberInfoActivityHistoryFetchSuccessAction {
     return {
         type: MEMBER_INFO.ACTIVITY_HISTORY_FETCH_SUCCESS,
         id,
@@ -92,10 +94,19 @@ export function memberInfoProfileFetch(
         dispatch(memberInfoDestinyProfileFetchSuccess(id, profile));
 
 
-        const history: IDestinyActivityHistoryResults[] = [];
+        let history: IDestinyHistoricalStatsPeriodGroup[] = [];
         for (let charId of profile.profile.data.characterIds) {
-            history.push(await Destiny2.getActivityHistory(id, charId, activityModeType));
+            const activities = (await Destiny2.getActivityHistory(id, charId, activityModeType)).activities;
+
+            if (activities !== undefined) {
+                history = history.concat(activities);
+            }
         }
+
+        history.sort((a, b) => {
+            return new Date(b.period).getTime() - new Date(a.period).getTime();
+        });
+
         dispatch(memberInfoActivityHistoryFetchSuccess(id, history));
     };
 }
