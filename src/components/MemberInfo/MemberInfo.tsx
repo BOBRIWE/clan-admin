@@ -12,7 +12,6 @@ interface IMemberInfoProps extends IMemberInfoContainerProps {
 }
 
 interface IMemberInfoState {
-    currentId: string,
     currentActivivtyId: string | null
 }
 
@@ -21,20 +20,18 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
         super(props);
 
         this.state = {
-            currentId: '',
             currentActivivtyId: null
         };
     }
 
     componentDidMount(): void {
         this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
-        this.setState({currentId: this.props.selectedMember});
     }
 
     componentDidUpdate(prevProps: Readonly<IMemberInfoProps>, prevState: Readonly<{}>, snapshot?: any): void {
-        if (this.state.currentId !== this.props.selectedMember) {
+        if (prevProps.selectedMember !== this.props.selectedMember) {
             this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
-            this.setState({currentId: this.props.selectedMember});
+            this.setState({currentActivivtyId: null});
         }
     }
 
@@ -48,9 +45,20 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
         }
 
 
+        let raidIconPath = '';
+        if (this.props.definitions !== null && this.state.currentActivivtyId !== null) {
+            const currActivity = this.props.activityHistories.find((item) => {
+                return item.activityDetails.instanceId === this.state.currentActivivtyId;
+            });
+
+            if (currActivity !== undefined) {
+                raidIconPath = this.props.definitions.DestinyActivityDefinition[currActivity.activityDetails.referenceId].pgcrImage;
+            }
+        }
+
+
         return (
-            // <section className="MemberInfo" style={{backgroundImage: `url(${'https://www.bungie.net/img/destiny_content/pgcr/raids.1305rh0093145r13t5hn10tnz.raid_sunset.jpg'})`}}>
-            <section className="MemberInfo">
+            <section className="MemberInfo" style={{backgroundImage: `url(https://www.bungie.net${raidIconPath})`}}>
                 <header className="MemberInfo__header">
                     { this.props.memberInfoLinkedAccounts && this.props.memberInfoLinkedAccounts.profiles
                         ? <span className="MemberInfo__name">{this.props.memberInfoLinkedAccounts.profiles[0].displayName}</span>
