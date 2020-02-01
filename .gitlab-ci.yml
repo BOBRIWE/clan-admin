@@ -5,7 +5,7 @@ stages:
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: ${$CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
     - build/
@@ -21,12 +21,10 @@ build:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+    - docker cp $(docker run --rm -d $IMAGE_TAG):/app/node_modules node_modules
+    - docker cp $(docker run --rm -d $IMAGE_TAG):/app/build build
 test:
   stage: test
-  allow_failure: true
-  before_script:
-    - npm ci
-    - npm build
   script:
     - npm test
 pages:
