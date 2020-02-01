@@ -4,33 +4,34 @@ stages:
   - test
   - deploy
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-    - build/
-
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
 build:
   image: docker:stable
   stage: build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - build/
   services:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+    - docker cp $(docker run --rm -d $IMAGE_TAG):/app/node_modules node_modules
+    - docker cp $(docker run --rm -d $IMAGE_TAG):/app/build build
 test:
   stage: test
-  allow_failure: true
-  before_script:
-    - npm ci
-    - npm build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
   script:
     - npm test
 pages:
   stage: deploy
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
   script:
     - ls
     - rm -rf public
