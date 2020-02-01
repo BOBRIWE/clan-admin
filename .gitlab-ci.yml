@@ -4,6 +4,12 @@ stages:
   - test
   - deploy
 
+cache:
+  key: ${$CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - build/
+
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
 build:
@@ -17,17 +23,10 @@ build:
     - docker push $IMAGE_TAG
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/node_modules node_modules
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/build build
-  cache:
-    key: build-cache
-    paths:
-      - node_modules/
-      - build/
 test:
   stage: test
   script:
     - npm test
-  cache:
-    key: build-cache
 pages:
   stage: deploy
   script:
@@ -35,8 +34,6 @@ pages:
     - rm -rf public
     - mv build public
     - cp public/index.html public/404.html
-  cache:
-    key: build-cache
   artifacts:
     paths:
       - public
