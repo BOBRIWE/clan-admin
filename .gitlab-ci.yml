@@ -18,7 +18,7 @@ build:
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/node_modules node_modules
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/build build
   cache:
-    key: ${CI_COMMIT_SHA}
+    key: build-cache
     paths:
       - node_modules/
       - build/
@@ -27,7 +27,7 @@ test:
   script:
     - npm test
   cache:
-    key: ${CI_COMMIT_SHA}
+    key: build-cache
 pages:
   stage: deploy
   script:
@@ -36,7 +36,7 @@ pages:
     - mv build public
     - cp public/index.html public/404.html
   cache:
-    key: ${CI_COMMIT_SHA}
+    key: build-cache
   artifacts:
     paths:
       - public
