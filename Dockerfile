@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY . /app
 
-RUN yarn install
-RUN yarn build
+RUN npm ci
+RUN npm build
 
 
 FROM nginx
