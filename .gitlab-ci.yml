@@ -4,12 +4,6 @@ stages:
   - test
   - deploy
 
-cache:
-  key: ${$CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-    - build/
-
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE/node:$CI_COMMIT_REF_SLUG
 build:
@@ -18,6 +12,10 @@ build:
   services:
     - docker:dind
   cache:
+    key: ${$CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - build/
     policy: push
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -28,12 +26,20 @@ build:
 test:
   stage: test
   cache:
+    key: ${$CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - build/
     policy: pull
   script:
     - npm test
 pages:
   stage: deploy
   cache:
+    key: ${$CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - build/
     policy: pull
   script:
     - ls
