@@ -9,11 +9,6 @@ variables:
 build:
   image: docker:stable
   stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - build/
   services:
     - docker:dind
   script:
@@ -22,21 +17,26 @@ build:
     - docker push $IMAGE_TAG
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/node_modules node_modules
     - docker cp $(docker run --rm -d $IMAGE_TAG):/app/build build
+  cache:
+    key: ${CI_COMMIT_SHA}
+    paths:
+      - node_modules/
+      - build/
 test:
   stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
   script:
     - npm test
+  cache:
+    key: ${CI_COMMIT_SHA}
 pages:
   stage: deploy
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
   script:
     - ls
     - rm -rf public
     - mv build public
     - cp public/index.html public/404.html
+  cache:
+    key: ${CI_COMMIT_SHA}
   artifacts:
     paths:
       - public
