@@ -2,7 +2,7 @@
 
 .ActivityStatsItem {
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: auto 1fr;
   column-gap: 10px;
   height: 36px;
   background-color: $dark100;
@@ -18,11 +18,14 @@
   &__main {
     display: grid;
     grid-auto-flow: column;
+    width: fit-content;
+    column-gap: 20px;
   }
 
   &__names {
     display: grid;
     grid-auto-flow: row;
+    width: 200px;
 
     &__main {
       font-family: Roboto, serif;
@@ -45,6 +48,8 @@
   }
 
   &__stat {
+    width: fit-content;
+
     &__name {
       font-family: Roboto, serif;
       font-style: normal;

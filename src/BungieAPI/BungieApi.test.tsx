@@ -92,7 +92,7 @@ it('should get ru all definitions', async () => {
 it('should get specific raid data', async () => {
     jest.setTimeout(30000);
     const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
-    let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
+    let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
 

@@ -7,7 +7,7 @@ services:
       context: docker/node
     user: ${USER_ID:-1000}:${GROUP_ID:-1000}
     restart: always
-    command: yarn run start
+    command: npm start
     ports:
       - 3000:3000
     volumes:

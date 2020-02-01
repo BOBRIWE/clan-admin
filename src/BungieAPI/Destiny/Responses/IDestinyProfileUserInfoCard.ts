@@ -13,6 +13,6 @@ export default interface IDestinyProfileUserInfoCard {
     applicableMembershipTypes: BungieMembershipType[]
     isPublic: boolean
     membershipType: BungieMembershipType
-    membershipId: number
+    membershipId: string
     displayName: string
 }

@@ -25,10 +25,10 @@ test:
   stage: test
   allow_failure: true
   before_script:
-    - yarn install
-    - yarn build
+    - npm ci
+    - npm build
   script:
-    - yarn test
+    - npm test
 pages:
   stage: deploy
   script:
