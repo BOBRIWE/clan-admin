@@ -10,13 +10,13 @@ import ClanBanner from '../ClanBanner';
 import Destiny from './Destiny/Destiny';
 
 it('should fetch reducers', async () => {
-    let clan = await GroupsV2.getClan(3990079);
+    let clan = await GroupsV2.getClan(3723667);
 
     expect(clan).not.toBe(undefined);
 });
 
 it('should fetch reducers members', async () => {
-    let clanMembers = await GroupsV2.getClanMembers(3990079);
+    let clanMembers = await GroupsV2.getClanMembers(3723667);
 
     expect(clanMembers).not.toBe(undefined);
 });
@@ -28,13 +28,13 @@ it('should fetch user general data', async () => {
 });
 
 it('should fetch linked accounts', async () => {
-    let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
+    let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);
 
     expect(userAccounts).not.toBe(undefined);
 });
 
 it.skip('should fetch activity history', async () => {
-    let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
+    let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
 
@@ -44,7 +44,7 @@ it.skip('should fetch activity history', async () => {
 it('should fetch team stats', async () => {
     jest.setTimeout(30000);
 
-    let userAccounts = await Destiny2.getLinkedProfiles(18454839, BungieMembershipType.All);
+    let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);
     let profile = await Destiny2.getProfile(userAccounts.profiles[0].membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam);
     let history = await Destiny2.getActivityHistory(userAccounts.profiles[0].membershipId, profile.profile.data.characterIds[0].toString(), ActivityModeType.Raid);
     let activityStats = await Destiny2.getPostGameCarnageReport(history.activities[0].activityDetails.instanceId);
@@ -53,7 +53,7 @@ it('should fetch team stats', async () => {
 });
 
 it.skip('should fetch banned', async () => {
-    let banned = await GroupsV2.getBannedMembersOfGroup(3990079);
+    let banned = await GroupsV2.getBannedMembersOfGroup(3723667);
 
     expect(banned).not.toBe(undefined);
 });
@@ -118,7 +118,7 @@ it('should get specific raid data', async () => {
 
 it.skip('should return database data', async () => {
     jest.setTimeout(30000);
-    const clan = await GroupsV2.getClan(3990079);
+    const clan = await GroupsV2.getClan(3723667);
     const cb = new ClanBanner(clan.detail.clanInfo.clanBannerData);
 
     const data = await cb.render();
