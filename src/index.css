@@ -29,3 +29,8 @@ code {
   font-weight: bold;
   src: local('Roboto'), url(./fonts/Roboto/Roboto-Bold.ttf) format('truetype');
 }
+
+#root {
+  height: 100vh;
+  /*overflow: hidden;*/
+}

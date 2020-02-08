@@ -1,6 +1,6 @@
 @import "../../vendors/variables";
 
-.MembersListItem {
+.MembersListGroupItem {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: auto 1fr;
@@ -8,6 +8,13 @@
   background: $dark100;
 
   box-sizing: border-box;
+
+  -webkit-box-shadow: 0 0 10px 1px $grayRGBA10;
+  -moz-box-shadow: 0 0 10px 1px $grayRGBA10;
+  box-shadow: 0 0 10px 1px $grayRGBA10;
+
+  z-index: 1;
+
 
   &:hover {
     cursor: pointer;

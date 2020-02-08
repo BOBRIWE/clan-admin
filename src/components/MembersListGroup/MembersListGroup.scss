@@ -1,10 +1,15 @@
 @import "../../vendors/variables";
 
-.MembersList {
+$margin: 30px;
+
+.MembersListGroup {
   display: grid;
-  row-gap: 2px;
-  padding: 30px;
-  height: fit-content;
+  row-gap: 10px;
+  margin-left: $margin;
+
+  & > :last-child {
+    margin-bottom: $margin;
+  }
 
   &__item {
     height: 50px;
@@ -13,6 +18,8 @@
   &__header {
     width: 100%;
     border-bottom: 1px solid $gray100;
+
+    margin-top: $margin;
 
     font-family: Roboto, serif;
     font-style: normal;

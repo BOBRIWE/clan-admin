@@ -1,6 +1,6 @@
 import React from 'react';
-import './MembersList.scss';
-import MembersListItem from './MembersListItem';
+import './MembersListGroup.scss';
+import MembersListGroupItem from './MembersListGroupItem';
 import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
 import {ISupportedDefinitions} from '../../BungieAPI/Destiny/Definitions/SupportedDefinitions';
 
@@ -14,14 +14,14 @@ interface IMembersListProps {
 interface IMembersListState {
 }
 
-class MembersList extends React.Component<IMembersListProps, IMembersListState> {
+class MembersListGroup extends React.Component<IMembersListProps, IMembersListState> {
     render() {
         return (
-            <article className="MembersList">
-                <span className="MembersList__header">{this.props.groupName}</span>
+            <article className="MembersListGroup">
+                <span className="MembersListGroup__header">{this.props.groupName}</span>
                 {
                     this.props.members.map((member) => {
-                        return <MembersListItem
+                        return <MembersListGroupItem
                             onClick={() => {
                                 this.props.selectUserCallback(member.destinyUserInfo.membershipId);
                             }}
@@ -36,4 +36,4 @@ class MembersList extends React.Component<IMembersListProps, IMembersListState> 
     }
 }
 
-export default MembersList;
+export default MembersListGroup;

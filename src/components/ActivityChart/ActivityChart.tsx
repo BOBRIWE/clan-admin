@@ -10,12 +10,12 @@ interface IActivityChartProps {
 
 class ActivityChart extends React.Component<IActivityChartProps> {
     private readonly chartRef: RefObject<any>;
-    private chart: Chart;
+    private chart: Chart | null;
 
     constructor(props: IActivityChartProps) {
         super(props);
         this.chartRef = React.createRef();
-        this.chart = new Chart('', {});
+        this.chart = null;
     }
 
     componentDidMount() {
@@ -50,12 +50,30 @@ class ActivityChart extends React.Component<IActivityChartProps> {
                 ]
             },
             options: {
-                events: ['click']
+                events: ['click'],
+                legend: {
+                    labels: {
+                        fontColor: "white"
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white"
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white"
+                        }
+                    }]
+                }
             }
         });
     }
 
     onPointClicked(e: React.MouseEvent) {
+        if (this.chart === null) return;
         const activePoints = this.chart.getElementAtEvent(e);
 
         if (activePoints.length <= 0) return;
