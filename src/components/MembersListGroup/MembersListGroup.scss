@@ -4,7 +4,7 @@ $margin: 30px;
 
 .MembersListGroup {
   display: grid;
-  row-gap: 2px;
+  row-gap: 10px;
   margin-left: $margin;
 
   & > :last-child {

@@ -9,6 +9,13 @@
 
   box-sizing: border-box;
 
+  -webkit-box-shadow: 0 0 10px 1px $grayRGBA10;
+  -moz-box-shadow: 0 0 10px 1px $grayRGBA10;
+  box-shadow: 0 0 10px 1px $grayRGBA10;
+
+  z-index: 1;
+
+
   &:hover {
     cursor: pointer;
   }

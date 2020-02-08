@@ -1,4 +1,8 @@
+@import 'src/vendors/variables';
+
 .MembersListGrouper {
   height: calc(100vh - #{60px});
   overflow-y: scroll;
+
+  background-color: $dark100;
 }
