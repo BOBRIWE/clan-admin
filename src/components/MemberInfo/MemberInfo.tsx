@@ -29,6 +29,9 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
     }
 
     componentDidUpdate(prevProps: Readonly<IMemberInfoProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (this.state.currentActivivtyId === null && this.props.activityHistories.length > 0) {
+            this.setState({currentActivivtyId: this.props.activityHistories[0].activityDetails.instanceId});
+        }
         if (prevProps.selectedMember !== this.props.selectedMember) {
             this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
             this.setState({currentActivivtyId: null});
@@ -40,11 +43,6 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
     }
 
     render() {
-        if (this.state.currentActivivtyId === null && this.props.activityHistories.length > 0) {
-            this.setState({currentActivivtyId: this.props.activityHistories[0].activityDetails.instanceId});
-        }
-
-
         let raidIconPath = '';
         if (this.props.definitions !== null && this.state.currentActivivtyId !== null) {
             const currActivity = this.props.activityHistories.find((item) => {
