@@ -2,12 +2,10 @@
 
 $margin: 30px;
 
-.MembersList {
+.MembersListGroup {
   display: grid;
   row-gap: 2px;
   margin-left: $margin;
-  height: calc(100vh - #{60px});
-  overflow-y: scroll;
 
   & > :last-child {
     margin-bottom: $margin;

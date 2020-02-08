@@ -1,6 +1,6 @@
 import React from 'react';
 import IGroupMember from '../../BungieAPI/GroupsV2/IGroupMember';
-import './MembersListItem.scss';
+import './MembersListGroupItem.scss';
 import Destiny2 from "../../BungieAPI/Destiny2/Destiny2";
 import ISingleComponentResponseOfDestinyProfileComponent
     from "../../BungieAPI/ISingleComponentResponseOfDestinyProfileComponent";
@@ -13,13 +13,13 @@ import IDestinyPostGameCarnageReportData
     from "../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData";
 import {ISupportedDefinitions} from '../../BungieAPI/Destiny/Definitions/SupportedDefinitions';
 
-interface IMembersListItemProps {
+interface IMembersListGroupItemProps {
     member: IGroupMember
     definitions: ISupportedDefinitions
     onClick: (e: React.MouseEvent) => void
 }
 
-interface IMemberListItemState {
+interface IMemberListGroupItemState {
     profile: ISingleComponentResponseOfDestinyProfileComponent | null
     activities: IDestinyHistoricalStatsPeriodGroup[]
     activityDefinitions: {[key: number]: IDestinyActivityDefinition} | null
@@ -27,8 +27,8 @@ interface IMemberListItemState {
     isFinished: boolean | null
 }
 
-export default class MembersListItem extends React.Component<IMembersListItemProps, IMemberListItemState> {
-    constructor(props: IMembersListItemProps) {
+export default class MembersListGroupItem extends React.Component<IMembersListGroupItemProps, IMemberListGroupItemState> {
+    constructor(props: IMembersListGroupItemProps) {
         super(props);
 
         this.state = {
@@ -91,75 +91,75 @@ export default class MembersListItem extends React.Component<IMembersListItemPro
 
     render() {
         return (
-            <section className="MembersList__item MembersListItem" onClick={this.props.onClick}>
-                <article className="MembersListItem__avatar">
+            <section className="MembersListGroup__item MembersListGroupItem" onClick={this.props.onClick}>
+                <article className="MembersListGroupItem__avatar">
                     <img alt='' src={'https://www.bungie.net' + this.props.member.bungieNetUserInfo.iconPath}/>
                 </article>
 
-                <article className="MembersListItem__body">
-                    <article className="MembersListItem__name">
+                <article className="MembersListGroupItem__body">
+                    <article className="MembersListGroupItem__name">
                         <span
-                            className="MembersListItem__name__main">
+                            className="MembersListGroupItem__name__main">
                             {this.props.member.destinyUserInfo.displayName}
                         </span>
                         <span
-                            className="MembersListItem__name__bnet">
+                            className="MembersListGroupItem__name__bnet">
                             {'Bnet: ' + this.props.member.bungieNetUserInfo.displayName}
                         </span>
                     </article>
                     {
                         this.state.profile !== null ?
                             (
-                                <article className="MembersListItem__body__item MembersListItem__last-played">
-                                    <span className="MembersListItem__body__item__header">Last Played</span>
-                                    <span className="MembersListItem__body__item__caption">{new DateFormatter(this.state.profile.data.dateLastPlayed).timeAgo}</span>
+                                <article className="MembersListGroupItem__body__item MembersListGroupItem__last-played">
+                                    <span className="MembersListGroupItem__body__item__header">Last Played</span>
+                                    <span className="MembersListGroupItem__body__item__caption">{new DateFormatter(this.state.profile.data.dateLastPlayed).timeAgo}</span>
                                 </article>
                             )
                             :
-                            <article className="MembersListItem__body__item MembersListItem__last-played"/>
+                            <article className="MembersListGroupItem__body__item MembersListGroupItem__last-played"/>
                     }
 
                     {
                         this.state.lastActivityReport !== null && this.state.activityDefinitions !== null ?
                             (
-                                <article className="MembersListItem__body__item MembersListItem__last-activity">
-                                    <span className="MembersListItem__body__item__header">Last Raid</span>
-                                    <span className="MembersListItem__body__item__caption">
+                                <article className="MembersListGroupItem__body__item MembersListGroupItem__last-activity">
+                                    <span className="MembersListGroupItem__body__item__header">Last Raid</span>
+                                    <span className="MembersListGroupItem__body__item__caption">
                                         {this.state.activityDefinitions[this.state.lastActivityReport.activityDetails.referenceId].displayProperties.name}
                                     </span>
                                 </article>
                             )
                             :
-                            <article className="MembersListItem__body__item MembersListItem__last-activity"/>
+                            <article className="MembersListGroupItem__body__item MembersListGroupItem__last-activity"/>
                     }
 
                     {
                         this.state.lastActivityReport !== null ?
                             (
-                                <article className="MembersListItem__body__item MembersListItem__activity-played">
-                                    <span className="MembersListItem__body__item__header">Raid Played</span>
-                                    <span className="MembersListItem__body__item__caption">{new DateFormatter(this.state.lastActivityReport.period).timeAgo}</span>
+                                <article className="MembersListGroupItem__body__item MembersListGroupItem__activity-played">
+                                    <span className="MembersListGroupItem__body__item__header">Raid Played</span>
+                                    <span className="MembersListGroupItem__body__item__caption">{new DateFormatter(this.state.lastActivityReport.period).timeAgo}</span>
                                 </article>
                             )
                             :
-                            <article className="MembersListItem__body__item MembersListItem__activity-played"/>
+                            <article className="MembersListGroupItem__body__item MembersListGroupItem__activity-played"/>
                     }
 
                     {
                         this.state.isFinished !== null ?
                             (
-                                <article className="MembersListItem__body__item MembersListItem__finished">
-                                    <span className="MembersListItem__body__item__header">Finished</span>
+                                <article className="MembersListGroupItem__body__item MembersListGroupItem__finished">
+                                    <span className="MembersListGroupItem__body__item__header">Finished</span>
                                     {
                                         this.state.isFinished ?
-                                            <span className="MembersListItem__body__item__caption MembersListItem__finished__yes">yes</span>
+                                            <span className="MembersListGroupItem__body__item__caption MembersListGroupItem__finished__yes">yes</span>
                                             :
-                                            <span className="MembersListItem__body__item__caption MembersListItem__finished__no">no</span>
+                                            <span className="MembersListGroupItem__body__item__caption MembersListGroupItem__finished__no">no</span>
                                     }
                                 </article>
                             )
                             :
-                            <article className="MembersListItem__body__item MembersListItem__finished"/>
+                            <article className="MembersListGroupItem__body__item MembersListGroupItem__finished"/>
                     }
 
                 </article>
