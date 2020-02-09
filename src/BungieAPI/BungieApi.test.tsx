@@ -76,20 +76,20 @@ it('should get destiny manifest', async () => {
     expect(manifest).not.toBe(undefined);
 });
 
-it('should get ru definitions', async () => {
+it.skip('should get ru definitions', async () => {
     const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
 
     expect(activity).not.toBe(undefined);
 });
 
-it('should get ru all definitions', async () => {
+it.skip('should get ru all definitions', async () => {
     jest.setTimeout(30000);
     const definitions = await Destiny.getAllDefinitions('ru');
 
     expect(definitions).not.toBe(undefined);
 });
 
-it('should get specific raid data', async () => {
+it.skip('should get specific raid data', async () => {
     jest.setTimeout(30000);
     const activity = (await Destiny.getAllDefinitions('ru')).DestinyActivityDefinition;
     let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);
