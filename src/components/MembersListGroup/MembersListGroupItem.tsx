@@ -22,7 +22,6 @@ interface IMembersListGroupItemProps {
 interface IMemberListGroupItemState {
     profile: ISingleComponentResponseOfDestinyProfileComponent | null
     activities: IDestinyHistoricalStatsPeriodGroup[]
-    activityDefinitions: {[key: number]: IDestinyActivityDefinition} | null
     lastActivityReport: IDestinyPostGameCarnageReportData | null
     isFinished: boolean | null
 }
@@ -33,7 +32,6 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
 
         this.state = {
             profile: null,
-            activityDefinitions: null,
             activities: [],
             lastActivityReport: null,
             isFinished: null
@@ -44,11 +42,6 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
         try {
             const { membershipId, membershipType } = this.props.member.destinyUserInfo;
             const profile = (await Destiny2.getProfile(membershipId.toString())).profile;
-            let activityDefinitions = null;
-            let activityDefinitionsReq = this.props.definitions;
-            if (activityDefinitionsReq !== undefined) {
-                activityDefinitions = activityDefinitionsReq.DestinyActivityDefinition;
-            }
 
             let activities: IDestinyHistoricalStatsPeriodGroup[] = [];
 
@@ -80,7 +73,6 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
             this.setState({
                 profile: profile,
                 activities: activities,
-                activityDefinitions: activityDefinitions,
                 lastActivityReport: postGameReport,
                 isFinished: isFinished
             });
@@ -120,12 +112,12 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
                     }
 
                     {
-                        this.state.lastActivityReport !== null && this.state.activityDefinitions !== null ?
+                        this.state.lastActivityReport !== null && this.props.definitions !== null ?
                             (
                                 <article className="MembersListGroupItem__body__item MembersListGroupItem__last-activity">
                                     <span className="MembersListGroupItem__body__item__header">Last Raid</span>
                                     <span className="MembersListGroupItem__body__item__caption">
-                                        {this.state.activityDefinitions[this.state.lastActivityReport.activityDetails.referenceId].displayProperties.name}
+                                        {this.props.definitions.DestinyActivityDefinition[this.state.lastActivityReport.activityDetails.referenceId].displayProperties.name}
                                     </span>
                                 </article>
                             )
