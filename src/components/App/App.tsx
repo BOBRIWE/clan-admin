@@ -24,7 +24,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
     componentDidMount(): void {
         const id = parseInt(this.props.match.params.clan as string);
-        this.props.definitionsFetch('en');
+        this.props.definitionsFetch('ru');
         this.props.clanMembersFetch(id);
         this.props.clanResponseFetch(id);
     }
