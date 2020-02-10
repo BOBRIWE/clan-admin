@@ -41,28 +41,31 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
     async componentDidMount(): Promise<void> {
         try {
             const { membershipId, membershipType } = this.props.member.destinyUserInfo;
-            const profile = (await Destiny2.getProfile(membershipId.toString())).profile;
+            const profile = (await Destiny2.getProfile(membershipId)).profile;
 
-            let activities: IDestinyHistoricalStatsPeriodGroup[] = [];
-
+            const historyRequests = [];
             for (let index = 0; index < profile.data.characterIds.length; index++) {
-                const moreActivities = await Destiny2.getActivityHistory(membershipId.toString(), profile.data.characterIds[index], ActivityModeType.Raid, 0, 250, membershipType);
+                 historyRequests.push(Destiny2.getActivityHistory(membershipId, profile.data.characterIds[index], ActivityModeType.Raid, 0, 1, membershipType));
+            }
 
-                if (moreActivities.activities === undefined) {
+            let history: IDestinyHistoricalStatsPeriodGroup[] = [];
+            for (let request of historyRequests) {
+                const activities = (await request).activities;
+                if (activities === undefined) {
                     continue;
                 }
 
-                activities = activities.concat(moreActivities.activities);
+                history = history.concat(activities);
             }
 
-            activities.sort((a, b) => {
+            history.sort((a, b) => {
                 return new Date(b.period).getTime() - new Date(a.period).getTime();
             });
 
             let postGameReport = null;
             let isFinished = null;
-            if (activities.length !== 0) {
-                postGameReport = await Destiny2.getPostGameCarnageReport(activities[0].activityDetails.instanceId);
+            if (history.length !== 0) {
+                postGameReport = await Destiny2.getPostGameCarnageReport(history[0].activityDetails.instanceId);
                 const player = postGameReport.entries.find((entry) => {
                     return entry.player.destinyUserInfo.membershipId === this.props.member.destinyUserInfo.membershipId;
                 });
@@ -72,7 +75,7 @@ export default class MembersListGroupItem extends React.Component<IMembersListGr
 
             this.setState({
                 profile: profile,
-                activities: activities,
+                activities: history,
                 lastActivityReport: postGameReport,
                 isFinished: isFinished
             });

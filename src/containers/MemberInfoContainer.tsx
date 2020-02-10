@@ -10,7 +10,7 @@ import {IMemberInfoState} from '../store/memberInfo/types';
 import {ISupportedDefinitions} from '../BungieAPI/Destiny/Definitions/SupportedDefinitions';
 
 export interface IMemberInfoContainerProps extends IMemberInfoState {
-    memberInfoFetch: (id: string, destinyComponentType: DestinyComponentType, bungieMembershipType: BungieMembershipType, activityModeType: ActivityModeType) => void
+    memberInfoFetch: (id: string, destinyComponentType: DestinyComponentType, bungieMembershipType: BungieMembershipType, activityModeType: ActivityModeType, page: number, count: number) => void
     postGameCarnageReportFetch: (id: string) => void
     selectedMember: string
     definitions: ISupportedDefinitions | null

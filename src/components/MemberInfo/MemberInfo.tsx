@@ -25,7 +25,7 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
     }
 
     componentDidMount(): void {
-        this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
+        this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 25);
     }
 
     componentDidUpdate(prevProps: Readonly<IMemberInfoProps>, prevState: Readonly<{}>, snapshot?: any): void {
@@ -33,7 +33,7 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
             this.setState({currentActivivtyId: this.props.activityHistories[0].activityDetails.instanceId});
         }
         if (prevProps.selectedMember !== this.props.selectedMember) {
-            this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid);
+            this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 25);
             this.setState({currentActivivtyId: null});
         }
     }
@@ -58,8 +58,8 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
         return (
             <section className="MemberInfo" style={{backgroundImage: `url(https://www.bungie.net${raidIconPath})`}}>
                 <header className="MemberInfo__header">
-                    { this.props.memberInfoLinkedAccounts && this.props.memberInfoLinkedAccounts.profiles
-                        ? <span className="MemberInfo__name">{this.props.memberInfoLinkedAccounts.profiles[0].displayName}</span>
+                    { this.props.memberInfoDestinyProfile && this.props.memberInfoDestinyProfile.profile !== null
+                        ? <span className="MemberInfo__name">{this.props.memberInfoDestinyProfile.profile.data.userInfo.displayName}</span>
                         : null
                     }
 

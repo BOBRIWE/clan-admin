@@ -23,6 +23,7 @@ import IDestinyPostGameCarnageReportData
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
 import IDestinyHistoricalStatsPeriodGroup
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
+import Cacher from '../../BungieAPI/Cacher';
 
 function memberInfoLinkedProfilesFetchStart(id: string): IMemberInfoLinkedAccountsFetchStartAction {
     return {
@@ -73,7 +74,9 @@ export function memberInfoProfileFetch(
     id: string,
     destinyComponentType: DestinyComponentType,
     bungieMembershipType: BungieMembershipType,
-    activityModeType: ActivityModeType
+    activityModeType: ActivityModeType,
+    page: number,
+    count: number
 ): ThunkAction<
     Promise<void>,
     undefined,
@@ -85,18 +88,31 @@ export function memberInfoProfileFetch(
         dispatch(memberInfoDestinyProfileFetchStart(id));
         dispatch(memberInfoActivityHistoryFetchStart(id));
 
-        const linkedProfiles = await Destiny2.getLinkedProfiles(id, BungieMembershipType.All);
-        dispatch(memberInfoLinkedProfilesFetchSuccess(id, linkedProfiles));
+        const cacher = new Cacher();
+
+        const dependencyData = {
+            linkedProfilesReq: Destiny2.getLinkedProfiles(id, BungieMembershipType.All),
+            profileReq: Destiny2.getProfile(id, destinyComponentType, bungieMembershipType)
+        };
 
 
-        const profile = await Destiny2.getProfile(id, destinyComponentType, bungieMembershipType);
+        const profile = (await dependencyData.profileReq);
         dispatch(memberInfoDestinyProfileFetchSuccess(id, profile));
 
+        const historyKey = `Destiny2.getActivityHistory//${id}/${activityModeType}/${page}/${count}`;
+        const cachedHistory = await cacher.get<IDestinyHistoricalStatsPeriodGroup[]>(historyKey);
+        if (cachedHistory !== undefined) {
+            dispatch(memberInfoActivityHistoryFetchSuccess(id, cachedHistory));
+        }
+
+        const activitiesRequests = [];
+        for (let charId of profile.profile.data.characterIds) {
+             activitiesRequests.push(Destiny2.getActivityHistory(id, charId, activityModeType, page, count));
+        }
 
         let history: IDestinyHistoricalStatsPeriodGroup[] = [];
-        for (let charId of profile.profile.data.characterIds) {
-            const activities = (await Destiny2.getActivityHistory(id, charId, activityModeType)).activities;
-
+        for (let request of activitiesRequests) {
+            const activities = (await request).activities;
             if (activities !== undefined) {
                 history = history.concat(activities);
             }
@@ -107,6 +123,10 @@ export function memberInfoProfileFetch(
         });
 
         dispatch(memberInfoActivityHistoryFetchSuccess(id, history));
+        await cacher.save<IDestinyHistoricalStatsPeriodGroup[]>(historyKey, history);
+
+        const linkedProfiles = await dependencyData.linkedProfilesReq;
+        dispatch(memberInfoLinkedProfilesFetchSuccess(id, linkedProfiles));
     };
 }
 

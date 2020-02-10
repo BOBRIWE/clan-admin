@@ -41,7 +41,7 @@ it.skip('should fetch activity history', async () => {
     expect(history).not.toBe(undefined);
 });
 
-it('should fetch team stats', async () => {
+it.skip('should fetch team stats', async () => {
     jest.setTimeout(30000);
 
     let userAccounts = await Destiny2.getLinkedProfiles('18454839', BungieMembershipType.All);

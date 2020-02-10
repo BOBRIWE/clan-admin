@@ -7,6 +7,10 @@ import {changeSelectedMember, clanMembersFetch, clanResponseFetch} from '../stor
 import {IClanState} from '../store/clan/types';
 import {IDefinitionsState} from '../store/definitions/types';
 import {definitionsFetch} from '../store/definitions/actions';
+import DestinyComponentType from '../BungieAPI/Destiny/DestinyComponentType';
+import BungieMembershipType from '../BungieAPI/BungieMembershipType';
+import ActivityModeType from '../BungieAPI/Destiny/Definitions/ActivityModeType';
+import {memberInfoProfileFetch} from '../store/memberInfo/actions';
 
 interface IAppURLParams {
     clan?: string | undefined;
@@ -17,6 +21,7 @@ export interface IAppContainerProps extends RouteComponentProps<IAppURLParams>, 
     clanResponseFetch: (id: number) => void
     definitionsFetch: (lang: string) => void
     changeSelectedMember: (id: string) => void
+    memberInfoFetch: (id: string, destinyComponentType: DestinyComponentType, bungieMembershipType: BungieMembershipType, activityModeType: ActivityModeType, page: number, count: number) => void
 }
 
 interface IAppContainerState extends IRootReducer {
@@ -40,5 +45,6 @@ export default connect(mapStateToProps, {
     clanMembersFetch: clanMembersFetch,
     clanResponseFetch: clanResponseFetch,
     definitionsFetch: definitionsFetch,
-    changeSelectedMember: changeSelectedMember
+    changeSelectedMember: changeSelectedMember,
+    memberInfoFetch: memberInfoProfileFetch
 })(AppContainer);

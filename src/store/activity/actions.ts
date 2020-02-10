@@ -30,11 +30,16 @@ export function activityHistoryFetch(profileResponse: IDestinyProfileResponse, a
     return async (dispatch) => {
         dispatch(activityHistoryFetchStart(profileResponse));
 
-        let activityHistory: IDestinyHistoricalStatsPeriodGroup[] = [];
-
+        const activityHistoryResponses = [];
         for (let charId in profileResponse.profile.data.characterIds) {
-            const activityHistoryResponse = await Destiny2.getActivityHistory(profileResponse.profile.data.userInfo.membershipId, charId, activityMode);
-            activityHistory = activityHistory.concat(activityHistoryResponse.activities);
+            activityHistoryResponses.push(Destiny2.getActivityHistory(profileResponse.profile.data.userInfo.membershipId, charId, activityMode));
+
+        }
+
+        let activityHistory: IDestinyHistoricalStatsPeriodGroup[] = [];
+        for (let response of activityHistoryResponses) {
+            const result = await response;
+            activityHistory = activityHistory.concat(result.activities);
         }
 
         dispatch(activityHistoryFetchSuccess(profileResponse, activityHistory));
