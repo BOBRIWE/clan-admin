@@ -50,7 +50,7 @@ class Cacher {
         const store = transaction.objectStore(this.STORE_NAME);
 
         return new Promise((resolve, reject) => {
-            const request = store.add(value, key);
+            const request = store.put(value, key);
 
             request.onerror = (e) => {
                 reject(`${key} not added! ${request.error}`);

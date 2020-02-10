@@ -5,6 +5,9 @@ import {IAppContainerProps} from '../../containers/AppContainer';
 import Separator from '../Separator/Separator';
 import MemberInfoContainer from '../../containers/MemberInfoContainer';
 import MembersListGrouper from '../MembersListGrouper/MembersListGrouper';
+import DestinyComponentType from '../../BungieAPI/Destiny/DestinyComponentType';
+import BungieMembershipType from '../../BungieAPI/BungieMembershipType';
+import ActivityModeType from '../../BungieAPI/Destiny/Definitions/ActivityModeType';
 
 interface IAppProps extends IAppContainerProps{
 }
@@ -27,6 +30,14 @@ export default class App extends React.Component<IAppProps, IAppState> {
         this.props.definitionsFetch('ru');
         this.props.clanMembersFetch(id);
         this.props.clanResponseFetch(id);
+    }
+
+    componentDidUpdate(prevProps: Readonly<IAppProps>, prevState: Readonly<IAppState>, snapshot?: any): void {
+        if (JSON.stringify(this.props.clanMembers) !== JSON.stringify(prevProps.clanMembers)) {
+            for (let member of this.props.clanMembers) {
+                this.props.memberInfoFetch(member.destinyUserInfo.membershipId, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 25);
+            }
+        }
     }
 
     selectedMemberCallback(id: string) {

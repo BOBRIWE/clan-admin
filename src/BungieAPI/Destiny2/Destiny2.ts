@@ -7,6 +7,8 @@ import ActivityModeType from '../Destiny/Definitions/ActivityModeType';
 import IDestinyActivityHistoryResults from '../Destiny/HistoricalStats/IDestinyActivityHistoryResults';
 import IDestinyPostGameCarnageReportData from '../Destiny/HistoricalStats/IDestinyPostGameCarnageReportData';
 import {IDestinyManifest} from './Config/IDestinyManifest';
+import Cacher from '../Cacher';
+import IResponse from '../IResponse';
 
 export default class Destiny2 {
     static async getLinkedProfiles(userId: string, membershipType: BungieMembershipType = -1): Promise<IDestinyLinkedProfilesResponse> {
@@ -21,7 +23,7 @@ export default class Destiny2 {
         characterId: string,
         mode: ActivityModeType = ActivityModeType.AllPvE,
         page: number = 0,
-        count: number = 250,
+        count: number = 25,
         membershipType: BungieMembershipType = -1
     ): Promise<IDestinyActivityHistoryResults> {
         const request = new Request(`/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?mode=${mode}&count=${count}&page=${page}`);
@@ -38,8 +40,19 @@ export default class Destiny2 {
     }
 
     static async getPostGameCarnageReport(activityId: string): Promise<IDestinyPostGameCarnageReportData> {
-        const request = new Request(`/Destiny2/Stats/PostGameCarnageReport/${activityId}/`);
+        const requestString = `/Destiny2/Stats/PostGameCarnageReport/${activityId}/`;
+
+        const cacher = new Cacher();
+        const cachedReport = await cacher.get<IResponse<IDestinyPostGameCarnageReportData>>(requestString);
+
+        if (cachedReport !== undefined) {
+            return cachedReport.Response;
+        }
+
+        const request = new Request(requestString);
         const response = await request.get<IDestinyPostGameCarnageReportData>();
+
+        await cacher.save<IResponse<IDestinyPostGameCarnageReportData>>(requestString, response);
 
         return response.Response;
     }
