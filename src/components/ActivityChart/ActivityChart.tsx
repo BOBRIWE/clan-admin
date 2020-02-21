@@ -1,5 +1,5 @@
-import React, {RefObject} from 'react';
-import Chart from 'chart.js';
+import React from 'react';
+import './ActivityChart.scss';
 import IDestinyHistoricalStatsPeriodGroup
     from '../../BungieAPI/Destiny/HistoricalStats/IDestinyHistoricalStatsPeriodGroup';
 
@@ -8,86 +8,118 @@ interface IActivityChartProps {
     onPointClicked: (id: string) => void
 }
 
-class ActivityChart extends React.Component<IActivityChartProps> {
-    private readonly chartRef: RefObject<any>;
-    private chart: Chart | null;
+interface IActivityChartState {
+    dateData: IDateData[][]
+}
 
+interface IDateData {
+    date: string
+    completed: number
+    failed: number
+    weekTag: string
+}
+
+class ActivityChart extends React.Component<IActivityChartProps, IActivityChartState> {
+    private readonly _weekTags: string[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     constructor(props: IActivityChartProps) {
         super(props);
-        this.chartRef = React.createRef();
-        this.chart = null;
+        this.state = {
+            dateData: []
+        }
     }
 
     componentDidMount() {
-        let timeString: string[] = [];
-        let colors: string[] = [];
+        const dateData: IDateData[][] = this.getEmptyDateData(this.props.activityData.reverse()[0].period);
 
-        const cut = this.props.activityData.slice(0, 25);
+        for (let stat of this.props.activityData) {
+            const formattedDate = this.formatDate(stat.period);
 
-        let time1 = cut.map((item) => {
-            timeString.push(new Date(item.period).toLocaleDateString());
+            let find: IDateData | undefined;
+            dateData.find((week) => {
+                const findDay = week.find((item) => {
+                    return formattedDate === item.date;
+                });
 
-            colors.push(item.values['completed'].basic.displayValue === 'Yes' ? '#00ff00' : '#ff0000');
+                if (findDay !== undefined) {
+                    find = findDay;
+                    return true;
+                }
 
-            return {
+                find = undefined;
+                return false;
+            });
 
-                t: new Date(item.period),
-                y: 0
-            };
-        });
-
-        this.chart = new Chart(this.chartRef.current, {
-            type: 'line',
-            data: {
-                labels: timeString,
-
-                datasets: [
-                    {
-                        data: time1,
-                        pointBackgroundColor: colors,
-                        radius: 5
-                    }
-                ]
-            },
-            options: {
-                events: ['click'],
-                legend: {
-                    labels: {
-                        fontColor: "white"
-                    }
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            fontColor: "white"
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            fontColor: "white"
-                        }
-                    }]
+            if (find !== undefined) {
+                if (stat.values['completed'].basic.displayValue === 'Yes') {
+                    find.completed++;
+                } else {
+                    find.failed++;
                 }
             }
+        }
+
+        this.setState({
+            dateData: dateData
         });
     }
 
-    onPointClicked(e: React.MouseEvent) {
-        if (this.chart === null) return;
-        const activePoints = this.chart.getElementAtEvent(e);
-
-        if (activePoints.length <= 0) return;
-
-        // @ts-ignore
-        const index: number = activePoints[0]._index;
-
-        this.props.onPointClicked(this.props.activityData[index].activityDetails.instanceId);
+    formatDate(date: string): string {
+        return new Date(date).toISOString().split('T')[0];
     }
+
+    getEmptyDateData(start: string): IDateData[][] {
+        let current = new Date(start);
+        const today = new Date(Date.now());
+        const dateData: IDateData[][] = [];
+        dateData.push([]);
+        let currentWeekIndex = 0;
+
+        while (current.getTime() <= today.getTime()) {
+            const formattedDate = this.formatDate(current.toISOString());
+            dateData[currentWeekIndex].push({
+                date: formattedDate,
+                completed: 0,
+                failed: 0,
+                weekTag: this._weekTags[new Date(formattedDate).getDay()]
+            });
+
+            if (new Date(formattedDate).getDay() === 6) {
+                currentWeekIndex++;
+                dateData.push([]);
+            }
+
+            current.setDate(current.getDate() + 1);
+        }
+
+        return dateData;
+    }
+
 
     render() {
         return (
             <section className="ActivityChart">
-                <canvas ref={this.chartRef} onClick={this.onPointClicked.bind(this)}/>
+                <header></header>
+                <main className="ActivityChart__main">
+                    {this.state.dateData.map((week, weekI) => {
+                        return <article key={weekI} className="ActivityChart__col">{week.map((item, itemI) => {
+                            let statusClass = '';
+                            if (item.failed !== 0 && item.completed !== 0) {
+                                statusClass = 'ActivityChart__cell--both';
+                            } else if (item.completed > 0) {
+                                statusClass = 'ActivityChart__cell--done';
+                            } else if (item.failed > 0) {
+                                statusClass = 'ActivityChart__cell--failed';
+                            }
+
+                            return <div key={itemI} className={`ActivityChart__cell ActivityChart__${item.weekTag} ${statusClass}`}>
+                                <div className="ActivityChart__cell__wrapper">
+                                    <span className="ActivityChart__cell__title">{item.date}</span>
+                                </div>
+                            </div>;
+                        })}</article>;
+                    })}
+                </main>
+                <footer></footer>
             </section>
         );
     }
