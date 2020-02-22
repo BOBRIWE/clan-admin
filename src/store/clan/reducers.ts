@@ -4,7 +4,7 @@ import {CLAN, IClanState} from './types';
 const initialState: IClanState = {
     clanMembers: [],
     clanResponse: undefined,
-    selectedMember: ''
+    selectedMember: null
 };
 
 export function clan(state = initialState, action: ClanActions): IClanState {

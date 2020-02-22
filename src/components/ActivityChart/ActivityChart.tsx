@@ -105,33 +105,36 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
             <section className="ActivityChart">
                 <SectionHeader title={'Calendar heatmap'}/>
                 <main className="ActivityChart__main">
-                    {this.state.dateData.map((week, weekI) => {
-                        return <article key={weekI} className="ActivityChart__col">{week.map((item, itemI) => {
-                            let statusClass = '';
-                            if (item.failed !== 0 && item.completed !== 0) {
-                                statusClass = 'ActivityChart__cell--both';
-                            } else if (item.completed > 0) {
-                                statusClass = 'ActivityChart__cell--done';
-                            } else if (item.failed > 0) {
-                                statusClass = 'ActivityChart__cell--failed';
-                            }
+                    <div className="ActivityChart__main__container">
+                        {this.state.dateData.map((week, weekI) => {
+                            return <article key={weekI} className="ActivityChart__col">{week.map((item, itemI) => {
+                                let statusClass = '';
+                                if (item.failed !== 0 && item.completed !== 0) {
+                                    statusClass = 'ActivityChart__cell--both';
+                                } else if (item.completed > 0) {
+                                    statusClass = 'ActivityChart__cell--done';
+                                } else if (item.failed > 0) {
+                                    statusClass = 'ActivityChart__cell--failed';
+                                }
 
-                            return <div key={itemI} className={`ActivityChart__cell ActivityChart__${item.weekTag} ${statusClass}`}>
-                                <div className="ActivityChart__cell__wrapper">
-                                    <span className="ActivityChart__cell__title">{item.date}</span>
-                                    <div className="ActivityChart__cell__data">
-                                        {item.data.map((activityData) => {
-                                            const colorClass = activityData.values['completed'].basic.displayValue === 'Yes' ? 'ActivityChart__cell--done' : 'ActivityChart__cell--failed';
-                                            return <div
-                                                className={`ActivityChart__cell__item ${colorClass}`}
-                                                onClick={()=>{this.props.onPointClicked(activityData.activityDetails.instanceId)}}
-                                            />
-                                        })}
+                                return <div key={itemI} className={`ActivityChart__cell ActivityChart__${item.weekTag} ${statusClass}`}>
+                                    <div className="ActivityChart__cell__wrapper">
+                                        <span className="ActivityChart__cell__title">{item.date}</span>
+                                        <div className="ActivityChart__cell__data">
+                                            {item.data.map((activityData, key) => {
+                                                const colorClass = activityData.values['completed'].basic.displayValue === 'Yes' ? 'ActivityChart__cell--done' : 'ActivityChart__cell--failed';
+                                                return <div
+                                                    key={key}
+                                                    className={`ActivityChart__cell__item ${colorClass}`}
+                                                    onClick={()=>{this.props.onPointClicked(activityData.activityDetails.instanceId)}}
+                                                />
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>;
-                        })}</article>;
-                    })}
+                                </div>;
+                            })}</article>;
+                        })}
+                    </div>
                 </main>
                 <footer></footer>
             </section>

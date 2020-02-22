@@ -56,7 +56,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
                     }
                     <Separator/>
                     {
-                        this.props.selectedMember !== '' ?
+                        this.props.selectedMember !== null ?
                             <MemberInfoContainer selectedMember={this.props.selectedMember}/>
                             :
                             null
