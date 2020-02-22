@@ -1,6 +1,9 @@
 @import '../../vendors/variables';
 
 .ActivityChart {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 5px;
 
   &__main {
     display: grid;
@@ -34,22 +37,46 @@
     cursor: pointer;
 
     &:hover &__wrapper {
-      display: block;
+      visibility: visible;
+      opacity: 1;
     }
 
     &:hover {
       border: 2px solid $dark100;
     }
 
+    &__item {
+      width: 15px;
+      height: 15px;
+      background-color: $gray100;
+      cursor: pointer;
+    }
+
+    &__data {
+      display: grid;
+      padding: 5px;
+      column-gap: 5px;
+      grid-auto-flow: column;
+      width: fit-content;
+    }
+
     &__wrapper {
+      opacity: .0;
+      transition: .4s;
       position: absolute;
-      display: none;
+      visibility: hidden;
       background-color: $dark100;
       width: max-content;
       z-index: 1;
       left: -100%;
-      bottom: 140%;
+      bottom: 12px;
       color: $white100;
+      cursor: auto;
+
+      &:hover {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
     &__title {
