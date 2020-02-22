@@ -31,9 +31,10 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
     }
 
     componentDidMount() {
-        const dateData: IDateData[][] = this.getEmptyDateData(this.props.activityData.reverse()[0].period);
+        const activityDataCopy = [...this.props.activityData];
+        const dateData: IDateData[][] = this.getEmptyDateData(activityDataCopy.reverse()[0].period);
 
-        for (let stat of this.props.activityData) {
+        for (let stat of activityDataCopy) {
             const formattedDate = this.formatDate(stat.period);
 
             let find: IDateData | undefined;
