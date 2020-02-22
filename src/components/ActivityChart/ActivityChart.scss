@@ -1,0 +1,131 @@
+@import '../../vendors/variables';
+
+.ActivityChart {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 5px;
+  max-width: 600px;
+
+
+  &__main {
+    overflow-x: scroll;
+
+    &__container {
+      display: grid;
+      grid-auto-flow: column;
+      column-gap: 5px;
+    }
+  }
+
+  &__col {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+      "Sunday"
+      "Monday"
+      "Tuesday"
+      "Wednesday"
+      "Thursday"
+      "Friday"
+      "Saturday";
+
+    row-gap: 5px;
+    grid-auto-rows: 15px;
+  }
+
+  &__cell {
+    box-sizing: border-box;
+    width: 15px;
+    height: 15px;
+    background-color: $gray100;
+    position: relative;
+    cursor: pointer;
+
+    &:hover &__wrapper {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:hover {
+      border: 2px solid $dark100;
+    }
+
+    &__item {
+      width: 15px;
+      height: 15px;
+      background-color: $gray100;
+      cursor: pointer;
+    }
+
+    &__data {
+      display: grid;
+      padding: 5px;
+      column-gap: 5px;
+      grid-auto-flow: column;
+      width: fit-content;
+    }
+
+    &__wrapper {
+      opacity: .0;
+      transition: .4s;
+      position: absolute;
+      visibility: hidden;
+      background-color: $dark100;
+      width: max-content;
+      z-index: 1;
+      left: -100%;
+      bottom: 12px;
+      color: $white100;
+      cursor: auto;
+
+      &:hover {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &__title {
+
+    }
+
+    &--done {
+      background-color: $green100;
+    }
+
+    &--failed {
+      background-color: $red100;
+    }
+
+    &--both {
+      background-color: $yellow100;
+    }
+  }
+
+  &__sun {
+    grid-area: Sunday;
+  }
+
+  &__mon {
+    grid-area: Monday;
+  }
+
+  &__tue {
+    grid-area: Tuesday;
+  }
+
+  &__wed {
+    grid-area: Wednesday;
+  }
+
+  &__thu {
+    grid-area: Thursday;
+  }
+
+  &__fri {
+    grid-area: Friday;
+  }
+
+  &__sat {
+    grid-area: Saturday;
+  }
+}

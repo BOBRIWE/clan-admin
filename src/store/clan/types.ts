@@ -50,5 +50,5 @@ export interface ISelectedMemberChangedAction extends ISelectedMemberState {
 }
 
 export interface ISelectedMemberState {
-    selectedMember: string
+    selectedMember: string | null
 }
