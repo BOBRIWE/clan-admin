@@ -25,7 +25,7 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
     }
 
     componentDidMount(): void {
-        this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 25);
+        this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 250);
     }
 
     componentDidUpdate(prevProps: Readonly<IMemberInfoProps>, prevState: Readonly<{}>, snapshot?: any): void {
