@@ -96,6 +96,10 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
             current.setDate(current.getDate() + 1);
         }
 
+        if (dateData[dateData.length - 1].length === 0) {
+            dateData.pop();
+        }
+
         return dateData;
     }
 

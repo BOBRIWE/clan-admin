@@ -9,6 +9,7 @@
 
   &__main {
     overflow-x: scroll;
+    padding: 50px 60px;
 
     &__container {
       display: grid;
@@ -28,7 +29,6 @@
       "Thursday"
       "Friday"
       "Saturday";
-
     row-gap: 5px;
     grid-auto-rows: 15px;
   }
@@ -38,8 +38,8 @@
     width: 15px;
     height: 15px;
     background-color: $gray100;
-    position: relative;
     cursor: pointer;
+    position: relative;
 
     &:hover &__wrapper {
       visibility: visible;
