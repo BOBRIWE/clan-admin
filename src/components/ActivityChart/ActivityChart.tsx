@@ -35,7 +35,7 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
         const dateData: IDateData[][] = this.getEmptyDateData(activityDataCopy.reverse()[0].period);
 
         for (let stat of activityDataCopy) {
-            const formattedDate = this.formatDate(stat.period);
+            const formattedDate = this.formatDate(new Date(stat.period));
 
             let find: IDateData | undefined;
             dateData.find((week) => {
@@ -67,19 +67,23 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
         });
     }
 
-    formatDate(date: string): string {
-        return new Date(date).toISOString().split('T')[0];
+    formatDate(date: Date): string {
+        let month = date.getMonth() + 1;
+        return `${date.getFullYear()}-${month}-${date.getDate()}`;
     }
 
     getEmptyDateData(start: string): IDateData[][] {
         let current = new Date(start);
+        current.setHours(0,0,0,0);
         const today = new Date(Date.now());
+        today.setHours(0,0,0,0);
         const dateData: IDateData[][] = [];
         dateData.push([]);
         let currentWeekIndex = 0;
 
         while (current.getTime() <= today.getTime()) {
-            const formattedDate = this.formatDate(current.toISOString());
+
+            const formattedDate = this.formatDate(current);
             dateData[currentWeekIndex].push({
                 date: formattedDate,
                 completed: 0,
@@ -93,8 +97,14 @@ class ActivityChart extends React.Component<IActivityChartProps, IActivityChartS
                 dateData.push([]);
             }
 
+            if (current.getTime() === today.getTime()) {
+                console.log();
+            }
+
             current.setDate(current.getDate() + 1);
+            current.setHours(0,0,0,0);
         }
+
 
         if (dateData[dateData.length - 1].length === 0) {
             dateData.pop();

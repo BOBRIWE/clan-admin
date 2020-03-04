@@ -33,7 +33,7 @@ class MemberInfo extends React.Component<IMemberInfoProps, IMemberInfoState> {
             this.setState({currentActivivtyId: this.props.activityHistories[0].activityDetails.instanceId});
         }
         if (prevProps.selectedMember !== this.props.selectedMember) {
-            this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 25);
+            this.props.memberInfoFetch(this.props.selectedMember, DestinyComponentType.Profiles, BungieMembershipType.TigerSteam, ActivityModeType.Raid, 0, 250);
             this.setState({currentActivivtyId: null});
         }
     }
